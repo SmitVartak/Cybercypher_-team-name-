@@ -197,15 +197,17 @@ export default function App() {
 
 
       {/* YouTube Background Video */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <iframe 
-          title="Background Video"
-          className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 opacity-20"
-          src="https://www.youtube.com/embed/Y1BmjPeatI4?autoplay=1&mute=1&controls=0&loop=1&playlist=Y1BmjPeatI4&playsinline=1&showinfo=0&rel=0" 
-          allow="autoplay; encrypted-media"
-          style={{ pointerEvents: 'none' }}
-        />
-      </div>
+      {!zenMode && (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+          <iframe 
+            title="Background Video"
+            className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 opacity-20"
+            src="https://www.youtube.com/embed/Y1BmjPeatI4?autoplay=1&mute=1&controls=0&loop=1&playlist=Y1BmjPeatI4&playsinline=1&showinfo=0&rel=0" 
+            allow="autoplay; encrypted-media"
+            style={{ pointerEvents: 'none' }}
+          />
+        </div>
+      )}
 
       {/* Background grain texture */}
       <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />

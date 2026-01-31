@@ -42,6 +42,26 @@ export function ReportsDashboard({ emails, events, onBack, isDarkText }: Reports
     { name: 'Fri', completed: 28, pending: 2 },
   ]; // Mock data for now
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className={`p-3 rounded-xl border backdrop-blur-xl shadow-2xl ${isDarkText ? 'bg-white/90 border-white/50 text-black' : 'bg-black/80 border-white/20 text-white'}`}>
+          {label && <p className="font-medium text-xs mb-2 opacity-70 uppercase tracking-wider">{label}</p>}
+          <div className="space-y-1">
+             {payload.map((entry: any, index: number) => (
+                <div key={index} className="flex items-center gap-2 text-sm font-medium">
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                    <span style={{ color: entry.color }}>{entry.name}:</span>
+                    <span>{entry.value}</span>
+                </div>
+             ))}
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -68,23 +88,36 @@ export function ReportsDashboard({ emails, events, onBack, isDarkText }: Reports
             <h3 className={`text-lg font-medium mb-6 ${isDarkText ? 'text-black/70' : 'text-white/80'}`}>Task Status</h3>
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
-                    ))}
-                  </Pie>
-                  <Tooltip 
-                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}
-                  />
+                  <PieChart>
+                    <defs>
+                      <linearGradient id="pieColorCompleted" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#10b981" stopOpacity={1}/>
+                        <stop offset="100%" stopColor="#059669" stopOpacity={1}/>
+                      </linearGradient>
+                      <linearGradient id="pieColorPending" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#fbbf24" stopOpacity={1}/>
+                        <stop offset="100%" stopColor="#d97706" stopOpacity={1}/>
+                      </linearGradient>
+                    </defs>
+                    <Pie
+                      data={pieData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={80}
+                      paddingAngle={5}
+                      dataKey="value"
+                    >
+                      {pieData.map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={entry.name === 'Completed' ? 'url(#pieColorCompleted)' : 'url(#pieColorPending)'} 
+                          stroke="none" 
+                          cornerRadius={6} 
+                        />
+                      ))}
+                    </Pie>
+                  <Tooltip content={<CustomTooltip />} />
                   <Legend verticalAlign="bottom" height={36}/>
                 </PieChart>
               </ResponsiveContainer>
@@ -97,13 +130,20 @@ export function ReportsDashboard({ emails, events, onBack, isDarkText }: Reports
             <div className="h-64 w-full">
                <ResponsiveContainer width="100%" height="100%">
                  <BarChart data={barData}>
+                   <defs>
+                      <linearGradient id="colorCompleted" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#10b981" stopOpacity={1}/>
+                        <stop offset="100%" stopColor="#10b981" stopOpacity={0.6}/>
+                      </linearGradient>
+                      <linearGradient id="colorPending" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#fbbf24" stopOpacity={1}/>
+                        <stop offset="100%" stopColor="#fbbf24" stopOpacity={0.6}/>
+                      </linearGradient>
+                   </defs>
                    <XAxis dataKey="name" stroke={isDarkText ? '#9ca3af' : '#6b7280'} fontSize={12} tickLine={false} axisLine={false} />
-                   <Tooltip 
-                     cursor={{ fill: isDarkText ? '#f3f4f6' : '#ffffff10' }}
-                     contentStyle={{ borderRadius: '12px', border: 'none' }}
-                   />
-                   <Bar dataKey="completed" fill="#10b981" radius={[4, 4, 0, 0]} />
-                   <Bar dataKey="pending" fill="#fbbf24" radius={[4, 4, 0, 0]} />
+                   <Tooltip content={<CustomTooltip />} cursor={{ fill: isDarkText ? '#f3f4f6' : '#ffffff10' }} />
+                   <Bar dataKey="completed" fill="url(#colorCompleted)" radius={[6, 6, 6, 6]} />
+                   <Bar dataKey="pending" fill="url(#colorPending)" radius={[6, 6, 6, 6]} />
                  </BarChart>
                </ResponsiveContainer>
             </div>
@@ -116,8 +156,12 @@ export function ReportsDashboard({ emails, events, onBack, isDarkText }: Reports
          {emails.filter(e => !e.read).slice(0, 5).map(email => (
             <div key={email.id} className={`p-4 rounded-xl border flex items-center justify-between ${isDarkText ? 'bg-white/60 backdrop-blur-md border-white/40 hover:bg-white/80' : 'bg-black/20 backdrop-blur-md border-white/10 hover:bg-white/5'} transition-colors cursor-pointer`}>
                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isDarkText ? 'bg-amber-100 text-amber-600' : 'bg-amber-500/20 text-amber-500'}`}>
-                     <Clock className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 border border-white/10">
+                     <img 
+                        src={email.from.avatar} 
+                        alt={email.from.name}
+                        className="w-full h-full object-cover"
+                     />
                   </div>
                   <div>
                      <p className={`font-medium ${isDarkText ? 'text-black/80' : 'text-white/90'}`}>{email.subject}</p>
