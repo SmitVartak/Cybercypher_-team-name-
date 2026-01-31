@@ -133,14 +133,15 @@ export function ThreeBandLayout({ emails, onResolve, onPin, onEmailClick, isLigh
           onMouseLeave={() => setHoveredBand(prev => prev === band ? null : prev)}
         >
           {/* Band Header */}
-          <div className="mb-4 sticky top-0 z-10 p-4 pb-3 backdrop-blur-md rounded-t-lg">
+          <div className={`mb-4 sticky top-0 z-10 p-4 pb-3 rounded-t-lg border-b backdrop-blur-xl transition-colors duration-500 ${
+              isLightMode ? 'bg-[#fbfaff]/80 border-purple-500/5' : 'bg-[#13111C]/80 border-purple-500/10'
+          }`}>
             <h2 className="font-['Instrument_Serif'] text-xl mb-1 tracking-wide">
               {bandConfig[band].label}
             </h2>
             <p className="text-[10px] uppercase tracking-widest opacity-50">
               {bandConfig[band].description}
             </p>
-            <div className="mt-2 h-px bg-current opacity-20" />
           </div>
 
           {/* Emails */}
