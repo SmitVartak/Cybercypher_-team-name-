@@ -1,5 +1,5 @@
 export type FocusMode = 'startup' | 'academic' | 'deep-work' | 'zen';
-export type FocusSliderPosition = 'home' | 'collab';
+export type FocusSliderPosition = 'home' | 'collab' | 'junk' | 'calendar';
 export type EmailBand = 'now' | 'next' | 'later';
 export type Priority = 'high' | 'medium' | 'low';
 export type Relationship = 'inner-circle' | 'important' | 'regular' | 'noise';
@@ -54,6 +54,7 @@ export interface CalendarEvent {
   end: Date;
   type: 'meeting' | 'deep-work' | 'focus' | 'deadline';
   emailThreadId?: string;
+  emailId?: string;
   participants?: Contact[];
   context: string;
   isShadow?: boolean;

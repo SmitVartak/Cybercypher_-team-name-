@@ -10,8 +10,8 @@ import { LiquidComposeButton } from '@/app/components/LiquidComposeButton';
 import { OnboardingHint } from '@/app/components/OnboardingHint';
 import { Toaster } from '@/app/components/ui/sonner';
 import { toast } from 'sonner';
-import { VerticalCalendar } from '@/app/components/VerticalCalendar';
 import { EmailDetailModal } from '@/app/components/EmailDetailModal';
+
 import { BurndownChart } from '@/app/components/BurndownChart';
 import { ComposeModal } from '@/app/components/ComposeModal';
 import { MeetingROITracker } from '@/app/components/MeetingROITracker';
@@ -20,7 +20,6 @@ import {
   mockEmails, 
   mockContacts, 
   mockProjectBubbles, 
-  mockGhostEvents,
   mockCalendarEvents,
   mockThreadMap,
 } from '@/app/data/mockData';
@@ -39,11 +38,9 @@ export default function App() {
   const [sliderPosition, setSliderPosition] = useState<FocusSliderPosition>('home');
   const [selectedContactId, setSelectedContactId] = useState<string | null>(null);
   const [emails, setEmails] = useState(mockEmails);
-  const [ghostEvents] = useState(mockGhostEvents);
   const [selectedThreadMap, setSelectedThreadMap] = useState<string | null>(null);
   const [zenMode, setZenMode] = useState(false);
 
-  const [isCalendarCollapsed, setIsCalendarCollapsed] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [isROIModalOpen, setIsROIModalOpen] = useState(false);
@@ -120,12 +117,16 @@ export default function App() {
   };
 
   const handleEventClick = (event: CalendarEvent) => {
-    if (event.emailThreadId) {
-      // Find an email with this thread ID
-      const email = emails.find(e => e.threadId === event.emailThreadId);
+    if (event.emailId || event.emailThreadId) {
+      // Prioritize finding by specific email ID, then fall back to thread ID
+      const email = emails.find(e => 
+        (event.emailId && e.id === event.emailId) || 
+        (event.emailThreadId && e.threadId === event.emailThreadId)
+      );
+
       if (email) {
         setSelectedEmail(email);
-        toast.success(`Context Stitched: Opened thread for "${event.title}"`);
+        toast.success(`Context Stitched: Opened related email for "${event.title}"`);
       } else {
         toast.info("Context not found for this event.");
       }
@@ -181,25 +182,29 @@ export default function App() {
     });
   };
 
-  const modeStyles = getFocusModeStyles(focusMode);
+
 
   return (
     <div
-      className="min-h-screen w-screen flex transition-all duration-700 ease-in-out relative overflow-y-auto overflow-x-hidden"
-      style={modeStyles}
+      className="h-screen w-screen overflow-hidden bg-black text-white relative font-sans selection:bg-white/20 flex"
+      style={getFocusModeStyles(focusMode)}
     >
+
+
       {/* Background grain texture */}
       <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
       
-      {/* Damascus Pattern Background */}
-      <div 
-        className="fixed inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 10 Q 45 25, 60 40 T 60 70 Q 45 85, 60 100 M 30 40 Q 20 50, 30 60 T 50 80 M 70 40 Q 80 50, 70 60 T 50 80 M 10 60 Q 15 55, 20 60 T 30 70 M 90 60 Q 95 55, 100 60 T 110 70' stroke='%23000000' stroke-width='0.5' fill='none' opacity='0.4'/%3E%3Cpath d='M 60 0 Q 70 10, 60 20 M 60 100 Q 70 110, 60 120 M 0 60 Q 10 70, 20 60 M 100 60 Q 110 70, 120 60' stroke='%23000000' stroke-width='0.3' fill='none' opacity='0.3'/%3E%3Ccircle cx='60' cy='60' r='3' fill='%23000000' opacity='0.2'/%3E%3Ccircle cx='30' cy='30' r='2' fill='%23000000' opacity='0.15'/%3E%3Ccircle cx='90' cy='30' r='2' fill='%23000000' opacity='0.15'/%3E%3Ccircle cx='30' cy='90' r='2' fill='%23000000' opacity='0.15'/%3E%3Ccircle cx='90' cy='90' r='2' fill='%23000000' opacity='0.15'/%3E%3C/svg%3E")`,
-          backgroundSize: '120px 120px',
-          backgroundRepeat: 'repeat'
-        }}
-      />
+      {/* Damascus Pattern Background - Hidden in Zen Mode */}
+      {!zenMode && (
+        <div 
+          className="fixed inset-0 opacity-[0.03] pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 10 Q 45 25, 60 40 T 60 70 Q 45 85, 60 100 M 30 40 Q 20 50, 30 60 T 50 80 M 70 40 Q 80 50, 70 60 T 50 80 M 10 60 Q 15 55, 20 60 T 30 70 M 90 60 Q 95 55, 100 60 T 110 70' stroke='%23000000' stroke-width='0.5' fill='none' opacity='0.4'/%3E%3Cpath d='M 60 0 Q 70 10, 60 20 M 60 100 Q 70 110, 60 120 M 0 60 Q 10 70, 20 60 M 100 60 Q 110 70, 120 60' stroke='%23000000' stroke-width='0.3' fill='none' opacity='0.3'/%3E%3Ccircle cx='60' cy='60' r='3' fill='%23000000' opacity='0.2'/%3E%3Ccircle cx='30' cy='30' r='2' fill='%23000000' opacity='0.15'/%3E%3Ccircle cx='90' cy='30' r='2' fill='%23000000' opacity='0.15'/%3E%3Ccircle cx='30' cy='90' r='2' fill='%23000000' opacity='0.15'/%3E%3Ccircle cx='90' cy='90' r='2' fill='%23000000' opacity='0.15'/%3E%3C/svg%3E")`,
+            backgroundSize: '120px 120px',
+            backgroundRepeat: 'repeat'
+          }}
+        />
+      )}
       
       {/* Ambient Gradient Orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -240,8 +245,6 @@ export default function App() {
               onModeChange={handleModeChange}
               sliderPosition={sliderPosition}
               onSliderChange={setSliderPosition}
-              isCalendarCollapsed={isCalendarCollapsed}
-              onToggleCalendar={() => setIsCalendarCollapsed(!isCalendarCollapsed)}
             />
           </motion.div>
         )}
@@ -250,7 +253,7 @@ export default function App() {
       {/* Main Content Area */}
       <div className="relative z-10 flex flex-col flex-1 min-w-0">
         {/* Header */}
-        <header className="px-10 pt-8 pb-6 flex-shrink-0">
+        <header className="px-10 pt-4 pb-3 flex-shrink-0">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -338,6 +341,169 @@ export default function App() {
                 <p className="text-sm opacity-70 mt-2">Tomorrow at 2:00 PM</p>
               </div>
             </motion.div>
+          ) : sliderPosition === 'junk' ? (
+            // Junk Page - Minimal dark view
+            <motion.div
+              key="junk"
+              initial={{ opacity: 0, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, filter: 'blur(10px)' }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col h-full"
+            >
+              {/* Use darker text for academic/startup modes */}
+              {(() => {
+                const isDarkText = focusMode === 'academic' || focusMode === 'startup';
+                return (
+              <div className="flex-1 flex flex-col items-center justify-center text-center">
+                <div className={`w-20 h-20 rounded-2xl ${isDarkText ? 'bg-black/5 border-black/10' : 'bg-white/5 border-white/10'} border flex items-center justify-center mb-6`}>
+                  <span className="text-4xl">🗑️</span>
+                </div>
+                <h2 className={`font-['Instrument_Serif'] text-3xl mb-3 ${isDarkText ? 'text-black/70' : 'text-white/80'}`}>Junk & Spam</h2>
+                <p className={`text-sm max-w-md mb-8 ${isDarkText ? 'text-black/50' : 'opacity-50'}`}>
+                  Low-priority emails and newsletters that don't need your immediate attention.
+                </p>
+                
+                {/* Empty State Junk List */}
+                <div className="w-full max-w-2xl space-y-3">
+                  {mockEmails.filter(e => e.priority === 'low').slice(0, 3).map((email, i) => (
+                    <motion.div
+                      key={email.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className={`p-4 ${isDarkText ? 'bg-black/5 border-black/10 hover:bg-black/10' : 'bg-white/5 border-white/10 hover:bg-white/10'} border rounded-lg flex items-center gap-4 transition-colors cursor-pointer`}
+                    >
+                      <div className={`w-10 h-10 rounded-full ${isDarkText ? 'bg-black/10' : 'bg-white/10'} flex items-center justify-center text-lg`}>
+                        {email.from.name[0]}
+                      </div>
+                      <div className="flex-1 text-left">
+                        <p className={`font-medium text-sm ${isDarkText ? 'text-black/70' : 'text-white/70'}`}>{email.subject}</p>
+                        <p className={`text-xs ${isDarkText ? 'text-black/40' : 'text-white/40'}`}>{email.from.name}</p>
+                      </div>
+                      <span className={`text-xs ${isDarkText ? 'text-black/30' : 'text-white/30'}`}>low priority</span>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                <button 
+                  onClick={() => setSliderPosition('home')}
+                  className={`mt-8 px-6 py-2 ${isDarkText ? 'bg-black/10 hover:bg-black/20 border-black/20' : 'bg-white/10 hover:bg-white/20 border-white/20'} border rounded-full text-sm font-medium transition-all`}
+                >
+                  Back to Inbox
+                </button>
+              </div>
+                );
+              })()}
+            </motion.div>
+          ) : sliderPosition === 'calendar' ? (
+            // Full Calendar Page - Weekly Grid View
+            <motion.div
+              key="calendar-page"
+              initial={{ opacity: 0, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, filter: 'blur(10px)' }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col h-full"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <h2 className="font-['Instrument_Serif'] text-3xl">Weekly Timeline</h2>
+                </div>
+
+                <button 
+                  onClick={() => setSliderPosition('home')}
+                  className="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-sm font-medium transition-all"
+                >
+                  Back to Inbox
+                </button>
+              </div>
+              
+              {/* Weekly Grid */}
+              <div className="flex-1 min-h-0 overflow-auto">
+                <div className="bg-black/15 backdrop-blur-md rounded-lg border border-white/20 overflow-hidden shadow-xl">
+                  {/* Days Header */}
+                  <div className="grid grid-cols-8 border-b border-white/20 bg-white/5">
+                    <div className="p-3 text-xs font-mono opacity-60 text-center border-r border-white/15">Time</div>
+                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => {
+                      const today = new Date();
+                      const startOfWeek = new Date(today);
+                      startOfWeek.setDate(today.getDate() - today.getDay() + i);
+                      const isToday = startOfWeek.toDateString() === today.toDateString();
+                      
+                      return (
+                        <div 
+                          key={day} 
+                          className={`p-3 text-center border-l border-white/15 ${isToday ? 'bg-[var(--accent-color)]/20' : ''}`}
+                        >
+                          <div className={`text-xs font-semibold uppercase tracking-wider ${isToday ? 'text-[var(--accent-color)]' : 'opacity-70'}`}>
+                            {day}
+                          </div>
+                          <div className={`text-lg font-mono font-bold ${isToday ? 'text-[var(--accent-color)]' : ''}`}>
+                            {startOfWeek.getDate()}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Hour Rows */}
+                  <div className="max-h-[500px] overflow-y-auto custom-scrollbar">
+                    {Array.from({ length: 14 }, (_, i) => i + 6).map((hour, idx) => (
+                      <div key={hour} className={`grid grid-cols-8 border-b border-white/10 min-h-[60px] ${idx % 2 === 0 ? 'bg-white/[0.03]' : 'bg-black/10'}`}>
+                        <div className="p-2 text-xs font-mono opacity-60 text-right pr-4 border-r border-white/15 flex items-center justify-end">
+                          {hour > 12 ? hour - 12 : hour} {hour >= 12 ? 'PM' : 'AM'}
+                        </div>
+                        {[0, 1, 2, 3, 4, 5, 6].map(dayOffset => {
+                          const today = new Date();
+                          const dayDate = new Date(today);
+                          dayDate.setDate(today.getDate() - today.getDay() + dayOffset);
+                          dayDate.setHours(hour, 0, 0, 0);
+                          
+                          // Find events for this hour/day
+                          const dayEvents = mockCalendarEvents.filter(e => {
+                            const eventDay = e.start.getDay();
+                            const eventHour = e.start.getHours();
+                            
+                            // Filter by selected mode
+                            // Startup mode shows: startup
+                            // Academic mode shows: academic
+                            // Career (deep-work) mode shows: deep-work
+                            const matchesMode = e.context === focusMode;
+                            
+                            return eventDay === dayOffset && eventHour === hour && matchesMode;
+                          });
+                          
+                          const isToday = dayDate.toDateString() === today.toDateString();
+                          const isCurrentHour = isToday && hour === today.getHours();
+                          
+                          return (
+                            <div 
+                              key={dayOffset}
+                              className={`p-1 border-l border-white/10 relative ${isToday ? 'bg-[var(--accent-color)]/10' : ''} ${isCurrentHour ? 'bg-emerald-500/20 ring-1 ring-inset ring-emerald-500/40' : ''}`}
+                            >
+                              {dayEvents.map(event => (
+                                <div
+                                  key={event.id}
+                                  onClick={() => handleEventClick(event)}
+                                  className={`text-[10px] p-1.5 rounded mb-1 cursor-pointer truncate font-medium shadow-sm ${
+                                    event.type === 'deep-work' 
+                                      ? 'bg-sky-500/30 border border-sky-400/50 text-sky-200'
+                                      : 'bg-indigo-500/30 border border-indigo-400/50 text-indigo-200'
+                                  }`}
+                                >
+                                  {event.title}
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           ) : (
             // Normal Mode
             <motion.div
@@ -349,7 +515,7 @@ export default function App() {
               className="flex flex-col h-full"
             >
               {/* Avatar Anchors + Project Bubbles Row */}
-              <div className="mb-6 flex-shrink-0 flex items-center gap-6">
+              <div className="mb-3 flex-shrink-0 flex items-center gap-4">
                 <AvatarAnchors
                   contacts={mockContacts}
                   selectedContactId={selectedContactId}
@@ -367,29 +533,10 @@ export default function App() {
                 )}
               </div>
 
-              {/* Flex Layout: Sidebar + Main Content */}
-              <div className="flex flex-1 min-h-0 gap-6">
-                
-                {/* Left Sidebar: Vertical Calendar */}
-                <motion.div 
-                  className="h-full flex-shrink-0"
-                  animate={{ 
-                    width: isCalendarCollapsed ? 0 : 260,
-                    opacity: isCalendarCollapsed ? 0 : 1,
-                    marginLeft: isCalendarCollapsed ? -20 : 0
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                >
-                   <VerticalCalendar 
-                      events={mockCalendarEvents.filter(e => focusMode === 'startup' ? ['startup', 'deep-work'].includes(e.context) : true)}
-                      ghostEvents={ghostEvents}
-                      collapsed={isCalendarCollapsed}
-                      onToggle={() => setIsCalendarCollapsed(!isCalendarCollapsed)}
-                      onEventClick={handleEventClick}
-                   />
-                </motion.div>
+              {/* Flex Layout: Main Content */}
+              <div className="flex flex-1 min-h-0 gap-3">
 
-                {/* Main Content Area - Now just emails */}
+                {/* Main Content Area */}
                 <div className="flex-1 flex flex-col min-w-0">
                   {/* Three Band Layout */}
                   <div className="flex-1">
@@ -404,29 +551,31 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Email Detail Modal */}
-              <AnimatePresence>
-                {selectedEmail && (
-                  <EmailDetailModal 
-                    email={selectedEmail} 
-                    onClose={() => setSelectedEmail(null)} 
-                  />
-                )}
-              </AnimatePresence>
-              
-              {/* Compose Modal */}
-              <AnimatePresence>
-                {isComposeOpen && (
-                  <ComposeModal 
-                    onClose={() => setIsComposeOpen(false)} 
-                    onSend={handleSend} 
-                  />
-                )}
-              </AnimatePresence>
+
             </motion.div>
           )}
           </AnimatePresence>
         </main>
+
+        {/* Email Detail Modal */}
+        <AnimatePresence>
+          {selectedEmail && (
+            <EmailDetailModal 
+              email={selectedEmail} 
+              onClose={() => setSelectedEmail(null)} 
+            />
+          )}
+        </AnimatePresence>
+        
+        {/* Compose Modal */}
+        <AnimatePresence>
+          {isComposeOpen && (
+            <ComposeModal 
+              onClose={() => setIsComposeOpen(false)} 
+              onSend={handleSend} 
+            />
+          )}
+        </AnimatePresence>
 
         {/* Liquid Compose Button */}
         {!zenMode && <LiquidComposeButton onClick={handleCompose} />}

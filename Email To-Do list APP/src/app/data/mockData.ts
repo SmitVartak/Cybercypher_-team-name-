@@ -68,6 +68,9 @@ export const mockContacts: Contact[] = [
 ];
 
 export const mockEmails: Email[] = [
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STARTUP MODE - Investor meetings, product work, team coordination
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: 'e1',
     from: mockContacts[0],
@@ -96,33 +99,6 @@ Best,
 Priya`,
   },
   {
-    id: 'e2',
-    from: mockContacts[1],
-    subject: 'Research Paper Feedback',
-    preview: 'Kartik, reviewed your draft. The methodology section needs work. Let\'s discuss next week.',
-    timestamp: new Date(2026, 0, 30, 16, 45),
-    read: false,
-    pinned: false,
-    band: 'now',
-    priority: 'high',
-    weight: 8,
-    hasDeadline: new Date(2026, 1, 5),
-    contexts: ['academic'],
-    bundleId: 'thesis-research',
-    threadId: 't2',
-    needsReply: true,
-    body: `Hi Kartik,
-
-I've gone through your draft for the upcoming conference. Overall, the premise is strong, but the [[methodology section needs significant work]]. You're making some assumptions about the dataset that aren't clearly justified.
-
-Let's discuss this during our next office hours. I'm available [[next Tuesday or Wednesday afternoon]].
-
-Please send me the [[revised citations by Friday]].
-
-Regards,
-Prof. Iyer`,
-  },
-  {
     id: 'e3',
     from: mockContacts[2],
     subject: 'Product Roadmap Q1 Review',
@@ -149,29 +125,6 @@ Cheers,
 Arjun`,
   },
   {
-    id: 'e4',
-    from: mockContacts[3],
-    subject: 'Thesis Committee Meeting',
-    preview: 'We should schedule your committee meeting for mid-February. What\'s your availability?',
-    timestamp: new Date(2026, 0, 29, 10, 20),
-    read: true,
-    pinned: true,
-    band: 'next',
-    priority: 'medium',
-    weight: 7,
-    contexts: ['academic'],
-    bundleId: 'thesis-research',
-    threadId: 't4',
-    body: `Hello Kartik,
-
-We need to finalize scheduling your [[thesis committee meeting]]. [[Mid-February]] would be ideal as it gives you enough time to incorporate the feedback from the preliminary review.
-
-Please send me your availability for the [[weeks of Feb 9th and Feb 16th]]. 
-
-Best,
-Dr. Desai`,
-  },
-  {
     id: 'e5',
     from: mockContacts[4],
     subject: 'UI Design Review',
@@ -193,27 +146,6 @@ Let me know what you think about the [[color palette]] – tried to keep it cons
 
 Best,
 Rohan`,
-  },
-  {
-    id: 'e6',
-    from: { id: 'c6', name: 'Newsletter Bot', avatar: '', email: 'noreply@tech.news', relationship: 'noise', contexts: [] },
-    subject: 'Weekly Tech Digest',
-    preview: 'Top stories this week: AI breakthroughs, startup funding rounds...',
-    timestamp: new Date(2026, 0, 27, 8, 0),
-    read: false,
-    pinned: false,
-    band: 'later',
-    priority: 'low',
-    weight: 2,
-    contexts: [],
-    threadId: 't6',
-    body: `Your Weekly Tech Digest
-
-1. **AI Breakthroughs**: New models showing promising results in reasoning tasks.
-2. **Startup Funding**: Global venture funding hits a 6-month high.
-3. **Hardware News**: The latest chips from silicon valley promise 2x efficiency.
-
-Click here to read the full report.`,
   },
   {
     id: 'e7',
@@ -270,6 +202,243 @@ Thanks,
 Vikram`,
   },
   {
+    id: 'e11',
+    from: mockContacts[0],
+    subject: 'Monday Morning Standup Agenda',
+    preview: 'Here is the agenda for our 9 AM standup. Please review before the call...',
+    timestamp: new Date(2026, 0, 26, 8, 30),
+    read: true,
+    pinned: false,
+    band: 'later',
+    priority: 'medium',
+    weight: 5,
+    contexts: ['startup'],
+    body: `Team,
+
+Agenda for [[Monday's 9 AM Standup]]:
+
+1. Sprint velocity check
+2. Blocker review
+3. Demo preparation for investor call
+
+Please come prepared with your updates!
+
+Best,
+Priya`,
+  },
+  {
+    id: 'e12',
+    from: mockContacts[2],
+    subject: 'Quarterly Board Deck - Need Your Section',
+    preview: 'The board deck is coming together. I need your product metrics section by EOD Tuesday...',
+    timestamp: new Date(2026, 0, 26, 11, 30),
+    read: false,
+    pinned: true,
+    band: 'now',
+    priority: 'high',
+    weight: 9,
+    hasDeadline: new Date(2026, 0, 27, 18, 0),
+    contexts: ['startup'],
+    needsReply: true,
+    body: `Hi,
+
+The [[quarterly board deck]] is shaping up well. However, I still need your [[product metrics section]].
+
+Key items to include:
+- MAU growth (month over month)
+- Retention cohorts
+- NPS trend
+
+[[Deadline: Tuesday 6 PM]]
+
+Thanks,
+Arjun`,
+  },
+  {
+    id: 'e15',
+    from: mockContacts[2],
+    subject: 'VC Partner Meeting Prep',
+    preview: 'Sequoia partner wants a 30-min call tomorrow. Here are the talking points...',
+    timestamp: new Date(2026, 0, 28, 9, 0),
+    read: false,
+    pinned: true,
+    band: 'now',
+    priority: 'high',
+    weight: 9,
+    contexts: ['startup'],
+    bundleId: 'seed-round',
+    needsReply: true,
+    body: `URGENT
+
+The [[Sequoia partner call]] is tomorrow at 10 AM. Here are the key talking points:
+
+1. **Traction**: 150% MoM growth in active users
+2. **Market Size**: $4.2B addressable market
+3. **Differentiation**: AI-first approach to email productivity
+4. **Ask**: $3M seed round at $15M pre-money
+
+Please review and add any missing points by [[today EOD]].
+
+Arjun`,
+  },
+  {
+    id: 'e17',
+    from: mockContacts[4],
+    subject: 'Design System v2.0 Ready for Review',
+    preview: 'The new design system is complete. Includes dark mode, accessibility improvements...',
+    timestamp: new Date(2026, 0, 29, 10, 30),
+    read: true,
+    pinned: false,
+    band: 'next',
+    priority: 'medium',
+    weight: 5,
+    contexts: ['startup'],
+    body: `Hey team,
+
+The [[Design System v2.0]] is ready for review!
+
+New features:
+- Full dark mode support
+- WCAG 2.1 AA accessibility compliance
+- Micro-interactions library
+- Updated component documentation
+
+Figma link attached. Please review during [[today's design review at 10 AM]].
+
+Cheers,
+Rohan`,
+  },
+  {
+    id: 'e18',
+    from: mockContacts[5],
+    subject: 'Sprint Retrospective Action Items',
+    preview: 'Here are the action items from yesterday sprint retro. Please review and acknowledge...',
+    timestamp: new Date(2026, 0, 29, 11, 0),
+    read: true,
+    pinned: false,
+    band: 'later',
+    priority: 'low',
+    weight: 3,
+    contexts: ['startup'],
+    body: `Team,
+
+Action items from [[Thursday's sprint retro]]:
+
+1. @Vikram: Set up automated testing pipeline - [[Due Monday]]
+2. @Rohan: Create component documentation - [[Due Wednesday]]
+3. @Rahul: Address tech debt in notification service - [[Due Friday]]
+
+Let's make this sprint count!
+
+Vikram`,
+  },
+  {
+    id: 'e19',
+    from: mockContacts[0],
+    subject: 'Investor Pitch Final Deck - REVIEW NEEDED',
+    preview: 'Attached is the final deck for the 2 PM investor pitch. Please review slides 8-12...',
+    timestamp: new Date(2026, 0, 30, 10, 0),
+    read: false,
+    pinned: true,
+    band: 'now',
+    priority: 'high',
+    weight: 10,
+    hasDeadline: new Date(2026, 0, 30, 14, 0),
+    contexts: ['startup'],
+    bundleId: 'seed-round',
+    needsReply: true,
+    body: `FINAL REVIEW NEEDED
+
+The [[investor pitch]] is at [[2:00 PM TODAY]]. Please review:
+
+- Slides 8-12: Financial projections
+- Slide 15: Team bios
+- Slide 18: Use of funds
+
+We have [[ONE SHOT]] at this. Let's nail it!
+
+Priya`,
+  },
+  {
+    id: 'e21',
+    from: mockContacts[7],
+    subject: 'Weekend Hackathon Invite',
+    preview: 'Building something cool this weekend? Join our virtual hackathon...',
+    timestamp: new Date(2026, 0, 31, 9, 0),
+    read: true,
+    pinned: false,
+    band: 'later',
+    priority: 'low',
+    weight: 2,
+    contexts: ['startup'],
+    isInvite: true,
+    body: `Hey everyone,
+
+I'm organizing a [[virtual hackathon this weekend]]!
+
+Theme: AI-powered productivity tools
+Time: Saturday 10 AM - Sunday 6 PM
+Prizes: Bragging rights + pizza!
+
+Who's in? Reply if interested!
+
+Rahul`,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ACADEMIC MODE - Research, thesis, papers, professors
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 'e2',
+    from: mockContacts[1],
+    subject: 'Research Paper Feedback',
+    preview: 'Kartik, reviewed your draft. The methodology section needs work. Let\'s discuss next week.',
+    timestamp: new Date(2026, 0, 30, 16, 45),
+    read: false,
+    pinned: false,
+    band: 'now',
+    priority: 'high',
+    weight: 8,
+    hasDeadline: new Date(2026, 1, 5),
+    contexts: ['academic'],
+    bundleId: 'thesis-research',
+    threadId: 't2',
+    needsReply: true,
+    body: `Hi Kartik,
+
+I've gone through your draft for the upcoming conference. Overall, the premise is strong, but the [[methodology section needs significant work]]. You're making some assumptions about the dataset that aren't clearly justified.
+
+Let's discuss this during our next office hours. I'm available [[next Tuesday or Wednesday afternoon]].
+
+Please send me the [[revised citations by Friday]].
+
+Regards,
+Prof. Iyer`,
+  },
+  {
+    id: 'e4',
+    from: mockContacts[3],
+    subject: 'Thesis Committee Meeting',
+    preview: 'We should schedule your committee meeting for mid-February. What\'s your availability?',
+    timestamp: new Date(2026, 0, 29, 10, 20),
+    read: true,
+    pinned: true,
+    band: 'next',
+    priority: 'medium',
+    weight: 7,
+    contexts: ['academic'],
+    bundleId: 'thesis-research',
+    threadId: 't4',
+    body: `Hello Kartik,
+
+We need to finalize scheduling your [[thesis committee meeting]]. [[Mid-February]] would be ideal as it gives you enough time to incorporate the feedback from the preliminary review.
+
+Please send me your availability for the [[weeks of Feb 9th and Feb 16th]]. 
+
+Best,
+Dr. Desai`,
+  },
+  {
     id: 'e9',
     from: { id: 'c7', name: 'Kavita Patel', avatar: 'https://i.pravatar.cc/150?img=49', email: 'kavita@university.edu', relationship: 'important', contexts: ['academic'] },
     subject: 'Lab Equipment Grant',
@@ -294,6 +463,319 @@ Best,
 Kavita`,
   },
   {
+    id: 'e13',
+    from: mockContacts[1],
+    subject: 'Research Paper Draft Review',
+    preview: 'I have completed the first draft of our joint paper. Would appreciate your feedback...',
+    timestamp: new Date(2026, 0, 27, 9, 15),
+    read: false,
+    pinned: false,
+    band: 'next',
+    priority: 'high',
+    weight: 8,
+    hasDeadline: new Date(2026, 0, 30, 18, 0),
+    contexts: ['academic'],
+    bundleId: 'thesis-research',
+    needsReply: true,
+    body: `Dear Student,
+
+I have completed the [[first draft of our joint research paper]] on deep learning optimization techniques.
+
+Please review and provide feedback by [[Friday 6 PM]] so we can submit before the conference deadline.
+
+Focus areas:
+- Methodology section
+- Experimental results
+- Related work citations
+
+Best regards,
+Prof. Venkatesh Iyer`,
+  },
+  {
+    id: 'e14',
+    from: mockContacts[3],
+    subject: 'Thesis Committee Meeting Scheduled',
+    preview: 'Your thesis committee meeting has been scheduled for next Wednesday at 2 PM...',
+    timestamp: new Date(2026, 0, 27, 14, 0),
+    read: true,
+    pinned: false,
+    band: 'next',
+    priority: 'medium',
+    weight: 6,
+    contexts: ['academic'],
+    isInvite: true,
+    body: `Dear Kartik,
+
+Your [[thesis committee meeting]] has been confirmed for [[next Wednesday at 2:00 PM]] in Room 301.
+
+Committee members:
+- Prof. Venkatesh Iyer (Chair)
+- Dr. Anjali Desai
+- Prof. Kumar (External)
+
+Please prepare a 20-minute presentation on your progress.
+
+Best,
+Dr. Desai`,
+  },
+  {
+    id: 'e16',
+    from: mockContacts[6],
+    subject: 'Grant Proposal Final Review',
+    preview: 'The NSF grant proposal is almost ready. Need your final sign-off before 5 PM submission...',
+    timestamp: new Date(2026, 0, 28, 15, 0),
+    read: false,
+    pinned: false,
+    band: 'now',
+    priority: 'high',
+    weight: 8,
+    hasDeadline: new Date(2026, 0, 28, 17, 0),
+    contexts: ['academic'],
+    needsReply: true,
+    body: `Hi,
+
+The [[NSF grant proposal]] is finalized and ready for submission.
+
+Budget summary:
+- Equipment: $150,000
+- Personnel: $200,000
+- Travel: $25,000
+
+[[Submission deadline: TODAY 5 PM]]
+
+Please review and approve!
+
+Kavita`,
+  },
+  {
+    id: 'e20',
+    from: mockContacts[1],
+    subject: 'Paper Submission Reminder - 6 PM Deadline',
+    preview: 'Friendly reminder that the conference paper submission closes at 6 PM today...',
+    timestamp: new Date(2026, 0, 30, 12, 0),
+    read: false,
+    pinned: true,
+    band: 'now',
+    priority: 'high',
+    weight: 9,
+    hasDeadline: new Date(2026, 0, 30, 18, 0),
+    contexts: ['academic'],
+    bundleId: 'thesis-research',
+    body: `Dear Student,
+
+This is a reminder that our [[paper submission deadline]] is [[TODAY at 6:00 PM]].
+
+Final checklist:
+- [ ] Abstract polished
+- [ ] All figures high-resolution
+- [ ] References formatted in IEEE style
+- [ ] Supplementary materials uploaded
+
+Please send me the final PDF by [[4 PM]] for a last review.
+
+Prof. Iyer`,
+  },
+  {
+    id: 'e23',
+    from: mockContacts[3],
+    subject: 'Monday Lab Meeting Agenda',
+    preview: 'Preparing for next week. Here is the agenda for our Monday lab meeting...',
+    timestamp: new Date(2026, 0, 31, 11, 0),
+    read: true,
+    pinned: false,
+    band: 'next',
+    priority: 'medium',
+    weight: 4,
+    contexts: ['academic'],
+    body: `Team,
+
+Agenda for [[Monday's Lab Meeting]] at 11 AM:
+
+1. Paper submission debrief
+2. New project proposals
+3. Conference travel planning
+4. Equipment updates
+
+Please prepare any topics you'd like to discuss.
+
+Dr. Desai`,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CAREER MODE - Job applications, networking, professional development
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 'e24',
+    from: { id: 'recruiter1', name: 'Sarah Chen', avatar: 'https://i.pravatar.cc/150?img=45', email: 'sarah@techcorp.com', relationship: 'important', contexts: ['deep-work'] },
+    subject: 'Senior Engineer Role - Interview Invitation',
+    preview: 'We reviewed your application and would like to invite you for a technical interview...',
+    timestamp: new Date(2026, 0, 30, 9, 0),
+    read: false,
+    pinned: true,
+    band: 'now',
+    priority: 'high',
+    weight: 10,
+    hasDeadline: new Date(2026, 1, 3, 17, 0),
+    contexts: ['deep-work'],
+    needsReply: true,
+    body: `Hi Kartik,
+
+Thank you for applying to the Senior Software Engineer position at TechCorp.
+
+We were impressed by your background and would like to [[invite you for a technical interview]].
+
+Available slots:
+- [[Monday, Feb 3 at 10 AM]]
+- [[Tuesday, Feb 4 at 2 PM]]
+- [[Wednesday, Feb 5 at 11 AM]]
+
+Please confirm your preferred time by [[Friday EOD]].
+
+Best regards,
+Sarah Chen
+Senior Technical Recruiter`,
+  },
+  {
+    id: 'e25',
+    from: { id: 'mentor1', name: 'David Kumar', avatar: 'https://i.pravatar.cc/150?img=12', email: 'david@mentorship.io', relationship: 'important', contexts: ['deep-work'] },
+    subject: 'Monthly Mentorship Check-in',
+    preview: 'Time for our monthly sync! Would love to hear about your career progress...',
+    timestamp: new Date(2026, 0, 29, 15, 0),
+    read: true,
+    pinned: false,
+    band: 'next',
+    priority: 'medium',
+    weight: 6,
+    contexts: ['deep-work'],
+    isInvite: true,
+    body: `Hey Kartik,
+
+It's time for our [[monthly mentorship check-in]]!
+
+Topics I'd like to cover:
+1. Career goals progress
+2. Technical skill development
+3. Networking opportunities
+4. Any challenges you're facing
+
+Let's meet [[this Thursday at 4 PM]] if that works for you.
+
+Looking forward to catching up!
+
+David`,
+  },
+  {
+    id: 'e26',
+    from: { id: 'linkedin', name: 'LinkedIn', avatar: 'https://i.pravatar.cc/150?img=69', email: 'notifications@linkedin.com', relationship: 'regular', contexts: ['deep-work'] },
+    subject: '5 New Job Matches for You',
+    preview: 'Based on your profile, we found 5 new opportunities that match your skills...',
+    timestamp: new Date(2026, 0, 28, 8, 0),
+    read: true,
+    pinned: false,
+    band: 'later',
+    priority: 'low',
+    weight: 3,
+    contexts: ['deep-work'],
+    body: `Hi Kartik,
+
+Based on your profile and job preferences, we found [[5 new job matches]]:
+
+1. **Staff Engineer** at Google - Mountain View
+2. **Tech Lead** at Stripe - Remote
+3. **Senior SWE** at Meta - Menlo Park
+4. **Principal Engineer** at Apple - Cupertino
+5. **Engineering Manager** at Netflix - Los Gatos
+
+Apply now to stand out!
+
+LinkedIn Jobs Team`,
+  },
+  {
+    id: 'e27',
+    from: { id: 'conference', name: 'TechConf 2026', avatar: 'https://i.pravatar.cc/150?img=70', email: 'speakers@techconf.io', relationship: 'important', contexts: ['deep-work'] },
+    subject: 'Speaking Opportunity - TechConf 2026',
+    preview: 'We would like to invite you to speak at our annual conference in March...',
+    timestamp: new Date(2026, 0, 27, 11, 0),
+    read: false,
+    pinned: false,
+    band: 'next',
+    priority: 'medium',
+    weight: 7,
+    hasDeadline: new Date(2026, 1, 10),
+    contexts: ['deep-work'],
+    needsReply: true,
+    body: `Dear Kartik,
+
+We are thrilled to invite you to be a [[speaker at TechConf 2026]]!
+
+Conference Details:
+- **Date**: March 15-17, 2026
+- **Location**: Bangalore International Convention Centre
+- **Topic**: We'd love a talk on AI-powered productivity tools
+
+Speaking benefits:
+- Complimentary conference pass
+- Travel and accommodation covered
+- Networking dinner with industry leaders
+
+Please [[confirm by February 10]] if you're interested.
+
+Best,
+TechConf Program Committee`,
+  },
+  {
+    id: 'e28',
+    from: { id: 'hiring-manager', name: 'Amit Verma', avatar: 'https://i.pravatar.cc/150?img=13', email: 'amit@startup.vc', relationship: 'important', contexts: ['deep-work'] },
+    subject: 'Referral Request - Engineering Lead Position',
+    preview: 'Your colleague mentioned you might know someone for our Engineering Lead role...',
+    timestamp: new Date(2026, 0, 26, 14, 0),
+    read: true,
+    pinned: false,
+    band: 'later',
+    priority: 'low',
+    weight: 4,
+    contexts: ['deep-work'],
+    body: `Hi Kartik,
+
+A mutual connection suggested I reach out. We're looking for an [[Engineering Lead]] at our Series A startup.
+
+Requirements:
+- 5+ years experience
+- Full-stack expertise
+- Leadership experience
+
+If you know anyone who might be a fit, I'd love an introduction. [[Referral bonus: $5,000]]!
+
+Thanks,
+Amit Verma
+VP Engineering`,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // GENERAL / NEWSLETTERS - Low priority, no specific context
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 'e6',
+    from: { id: 'c6', name: 'Newsletter Bot', avatar: '', email: 'noreply@tech.news', relationship: 'noise', contexts: [] },
+    subject: 'Weekly Tech Digest',
+    preview: 'Top stories this week: AI breakthroughs, startup funding rounds...',
+    timestamp: new Date(2026, 0, 27, 8, 0),
+    read: false,
+    pinned: false,
+    band: 'later',
+    priority: 'low',
+    weight: 2,
+    contexts: [],
+    threadId: 't6',
+    body: `Your Weekly Tech Digest
+
+1. **AI Breakthroughs**: New models showing promising results in reasoning tasks.
+2. **Startup Funding**: Global venture funding hits a 6-month high.
+3. **Hardware News**: The latest chips from silicon valley promise 2x efficiency.
+
+Click here to read the full report.`,
+  },
+  {
     id: 'e10',
     from: { id: 'c8', name: 'Rahul Nair', avatar: 'https://i.pravatar.cc/150?img=53', email: 'rahul@deepwork.co', relationship: 'regular', contexts: ['startup', 'academic'] },
     subject: 'Deep Work Session Invite',
@@ -314,114 +796,241 @@ Feel free to join me in "Do Not Disturb" mode if you have focused tasks to knock
 Cheers,
 Rahul`,
   },
+  {
+    id: 'e22',
+    from: { id: 'newsletter', name: 'Morning Brew', avatar: 'https://i.pravatar.cc/150?img=68', email: 'newsletter@morningbrew.com', relationship: 'noise', contexts: [] },
+    subject: 'Weekend Edition: Tech Headlines',
+    preview: 'The biggest stories in tech this week. Plus: startup layoffs continue...',
+    timestamp: new Date(2026, 0, 31, 7, 0),
+    read: false,
+    pinned: false,
+    band: 'later',
+    priority: 'low',
+    weight: 1,
+    contexts: [],
+    body: `Happy Weekend!
+
+📰 Top Stories:
+1. Major tech giant announces 10,000 layoffs
+2. AI startup raises record $500M Series B
+3. New privacy regulations take effect in EU
+
+Have a great weekend!
+Morning Brew Team`,
+  },
 ];
 
 export const mockGhostEvents: GhostEvent[] = [
   {
     id: 'g1',
     emailId: 'e1',
-    title: 'Investor Pitch Prep',
+    title: 'Pitch Prep',
     suggestedDate: new Date(2026, 1, 1, 13, 0),
-    snippet: 'Can we sync before the investor pitch at 2pm?',
-    solidified: false,
-  },
-  {
-    id: 'g2',
-    emailId: 'e4',
-    title: 'Thesis Committee Meeting',
-    snippet: 'We should schedule your committee meeting for mid-February',
-    solidified: false,
-  },
-  {
-    id: 'g3',
-    emailId: 'e8',
-    title: 'Brainstorm: User Acquisition',
-    suggestedDate: new Date(2026, 0, 31, 14, 0), // 2 PM
-    snippet: 'I have some ideas for outlining the new user acquisition strategy.',
-    solidified: false,
-  },
-  {
-    id: 'g4',
-    emailId: 'e9',
-    title: 'Budget Review: Lab Grant',
-    suggestedDate: new Date(2026, 0, 31, 11, 0), // 11 AM
-    snippet: 'The grant application is due next week. Need your input on the budget.',
-    solidified: false,
-  },
-  {
-    id: 'g5',
-    emailId: 'e10',
-    title: 'Team Deep Work',
-    suggestedDate: new Date(2026, 0, 31, 9, 0), // 9 AM
-    snippet: 'Planning a deep work session for the team.',
+    snippet: 'Sync before the investor pitch',
     solidified: false,
   },
 ];
 
 export const mockCalendarEvents: CalendarEvent[] = [
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STARTUP MODE - Investor meetings, team syncs, product work
+  // ═══════════════════════════════════════════════════════════════════════════
   {
-    id: 'cal1',
-    title: 'Deep Work: Research Paper',
-    start: new Date(2026, 0, 31, 9, 0),
+    id: 'cal-sun-1',
+    title: 'Weekly Planning',
+    start: new Date(2026, 0, 25, 10, 0),
+    end: new Date(2026, 0, 25, 11, 0),
+    type: 'deep-work',
+    context: 'startup',
+  },
+  {
+    id: 'cal-mon-1',
+    title: 'Morning Standup',
+    start: new Date(2026, 0, 26, 9, 0),
+    end: new Date(2026, 0, 26, 9, 30),
+    type: 'meeting',
+    context: 'startup',
+    emailId: 'e11',
+  },
+  {
+    id: 'cal-mon-2',
+    title: 'Investor Prep Call',
+    start: new Date(2026, 0, 26, 11, 0),
+    end: new Date(2026, 0, 26, 12, 0),
+    type: 'meeting',
+    context: 'startup',
+  },
+  {
+    id: 'cal-mon-3',
+    title: 'Deep Work: Product Roadmap',
+    start: new Date(2026, 0, 26, 14, 0),
+    end: new Date(2026, 0, 26, 16, 0),
+    type: 'deep-work',
+    context: 'startup',
+  },
+  {
+    id: 'cal-wed-1',
+    title: 'Board Meeting Prep',
+    start: new Date(2026, 0, 28, 8, 0),
+    end: new Date(2026, 0, 28, 9, 0),
+    type: 'deep-work',
+    context: 'startup',
+  },
+  {
+    id: 'cal-wed-2',
+    title: 'VC Partner Call',
+    start: new Date(2026, 0, 28, 10, 0),
+    end: new Date(2026, 0, 28, 11, 0),
+    type: 'meeting',
+    context: 'startup',
+  },
+  {
+    id: 'cal-thu-1',
+    title: 'Sprint Planning',
+    start: new Date(2026, 0, 29, 9, 0),
+    end: new Date(2026, 0, 29, 10, 0),
+    type: 'meeting',
+    context: 'startup',
+  },
+  {
+    id: 'cal-thu-2',
+    title: 'Design Review',
+    start: new Date(2026, 0, 29, 10, 0),
+    end: new Date(2026, 0, 29, 11, 0),
+    type: 'meeting',
+    context: 'startup',
+  },
+  {
+    id: 'cal-thu-4',
+    title: 'Code Review Session',
+    start: new Date(2026, 0, 29, 15, 0),
+    end: new Date(2026, 0, 29, 16, 0),
+    type: 'meeting',
+    context: 'startup',
+  },
+  {
+    id: 'cal-fri-2',
+    title: 'Team Sync',
+    start: new Date(2026, 0, 30, 11, 0),
+    end: new Date(2026, 0, 30, 11, 30),
+    type: 'meeting',
+    context: 'startup',
+  },
+  {
+    id: 'cal-fri-3',
+    title: 'Investor Pitch',
+    start: new Date(2026, 0, 30, 14, 0),
+    end: new Date(2026, 0, 30, 15, 0),
+    type: 'meeting',
+    context: 'startup',
+    emailId: 'e19',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ACADEMIC MODE - Lectures, lab meetings, thesis work
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 'cal-tue-1',
+    title: 'ML Lecture',
+    start: new Date(2026, 0, 27, 9, 0),
+    end: new Date(2026, 0, 27, 10, 30),
+    type: 'meeting',
+    context: 'academic',
+  },
+  {
+    id: 'cal-tue-2',
+    title: 'Research Lab Meeting',
+    start: new Date(2026, 0, 27, 11, 0),
+    end: new Date(2026, 0, 27, 12, 0),
+    type: 'meeting',
+    context: 'academic',
+  },
+  {
+    id: 'cal-tue-3',
+    title: 'Thesis Writing',
+    start: new Date(2026, 0, 27, 14, 0),
+    end: new Date(2026, 0, 27, 17, 0),
+    type: 'deep-work',
+    context: 'academic',
+  },
+  {
+    id: 'cal-wed-3',
+    title: 'Prof. Iyer Office Hours',
+    start: new Date(2026, 0, 28, 14, 0),
+    end: new Date(2026, 0, 28, 14, 30),
+    type: 'meeting',
+    context: 'academic',
+  },
+  {
+    id: 'cal-wed-4',
+    title: 'Grant Proposal Deadline',
+    start: new Date(2026, 0, 28, 17, 0),
+    end: new Date(2026, 0, 28, 17, 30),
+    type: 'deadline',
+    context: 'academic',
+  },
+  {
+    id: 'cal-thu-3',
+    title: 'Lunch with Advisor',
+    start: new Date(2026, 0, 29, 12, 0),
+    end: new Date(2026, 0, 29, 13, 0),
+    type: 'meeting',
+    context: 'academic',
+  },
+  {
+    id: 'cal-fri-1',
+    title: 'Deep Work Block',
+    start: new Date(2026, 0, 30, 9, 0),
+    end: new Date(2026, 0, 30, 11, 0),
+    type: 'deep-work',
+    context: 'academic',
+  },
+  {
+    id: 'cal-fri-4',
+    title: 'Paper Submission Deadline',
+    start: new Date(2026, 0, 30, 18, 0),
+    end: new Date(2026, 0, 30, 18, 30),
+    type: 'deadline',
+    context: 'academic',
+    emailId: 'e20',
+  },
+  {
+    id: 'cal-sat-2',
+    title: 'Research Reading',
+    start: new Date(2026, 0, 31, 14, 0),
+    end: new Date(2026, 0, 31, 16, 0),
+    type: 'deep-work',
+    context: 'academic',
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // CAREER MODE - Interviews, mentorship, upskilling
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 'cal-thu-5',
+    title: 'Mentorship Check-in',
+    start: new Date(2026, 0, 29, 16, 0),
+    end: new Date(2026, 0, 29, 16, 30),
+    type: 'meeting',
+    context: 'deep-work',
+    emailId: 'e25',
+  },
+  {
+    id: 'cal-sat-1',
+    title: 'Personal Project Time',
+    start: new Date(2026, 0, 31, 10, 0),
     end: new Date(2026, 0, 31, 12, 0),
     type: 'deep-work',
-    context: 'academic',
+    context: 'deep-work',
   },
   {
-    id: 'cal2',
-    title: 'Investor Pitch',
-    start: new Date(2026, 1, 1, 14, 0),
-    end: new Date(2026, 1, 1, 15, 30),
-    type: 'meeting',
-    participants: [mockContacts[0], mockContacts[2]],
-    context: 'startup',
-    emailThreadId: 't1',
-  },
-  {
-    id: 'cal3',
-    title: 'Focus: Product Strategy',
-    start: new Date(2026, 1, 2, 10, 0),
-    end: new Date(2026, 1, 2, 12, 0),
-    type: 'focus',
-    context: 'startup',
-  },
-  {
-    id: 'cal4',
-    title: 'Sync w/ Vikram',
-    start: new Date(2026, 0, 31, 16, 0),
-    end: new Date(2026, 0, 31, 16, 30),
-    type: 'meeting',
-    context: 'startup',
-  },
-  {
-    id: 'cal5',
-    title: 'Grant Writing Workshop',
-    start: new Date(2026, 0, 31, 18, 0),
-    end: new Date(2026, 0, 31, 19, 30),
+    id: 'cal-sun-2',
+    title: 'LeetCode Practice',
+    start: new Date(2026, 0, 25, 14, 0),
+    end: new Date(2026, 0, 25, 16, 0),
     type: 'deep-work',
-    context: 'academic',
+    context: 'deep-work',
   },
-  // Shadow Events (Ghost Blocks)
-  {
-    id: 'shadow1',
-    title: 'Reply: Investor Pitch',
-    start: new Date(2026, 0, 31, 13, 0),
-    end: new Date(2026, 0, 31, 14, 0), // 1 hour estimate
-    type: 'focus',
-    context: 'startup',
-    isShadow: true,
-    emailThreadId: 't1'
-  },
-  {
-    id: 'shadow2',
-    title: 'Review: Research Paper',
-    start: new Date(2026, 0, 31, 15, 0),
-    end: new Date(2026, 0, 31, 16, 0), // 1 hour estimate
-    type: 'focus',
-    context: 'academic',
-    isShadow: true,
-    emailThreadId: 't2'
-  }
 ];
 
 export const mockProjectBubbles: ProjectBubble[] = [

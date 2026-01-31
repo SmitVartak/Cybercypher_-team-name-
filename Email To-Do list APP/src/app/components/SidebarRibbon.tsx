@@ -7,7 +7,8 @@ import {
   Calendar as CalendarIcon, 
   Home,
   Users,
-  Settings
+  Settings,
+  Trash2
 } from 'lucide-react';
 import { FocusMode, FocusSliderPosition } from '@/app/types';
 import { focusModeConfigs } from '@/app/utils/focusModes';
@@ -17,8 +18,6 @@ interface SidebarRibbonProps {
   onModeChange: (mode: FocusMode) => void;
   sliderPosition: FocusSliderPosition;
   onSliderChange: (position: FocusSliderPosition) => void;
-  isCalendarCollapsed: boolean;
-  onToggleCalendar: () => void;
 }
 
 export function SidebarRibbon({
@@ -26,8 +25,6 @@ export function SidebarRibbon({
   onModeChange,
   sliderPosition,
   onSliderChange,
-  isCalendarCollapsed,
-  onToggleCalendar
 }: SidebarRibbonProps) {
 
   const modes: { value: FocusMode; icon: any }[] = [
@@ -39,18 +36,19 @@ export function SidebarRibbon({
   const positions: { value: FocusSliderPosition; icon: any; label: string }[] = [
     { value: 'home', icon: Home, label: 'Home' },
     { value: 'collab', icon: Users, label: 'Collab' },
+    { value: 'junk', icon: Trash2, label: 'Junk' },
   ];
 
   return (
     <div className="sticky top-0 left-0 h-screen w-16 flex flex-col items-center py-6 bg-black/20 backdrop-blur-xl border-r border-white/10 z-50 flex-shrink-0">
       
-      {/* Top: Timeline Toggle */}
+      {/* Top: Timeline Page Button */}
       <div className="mb-8">
         <RibbonButton 
-            onClick={onToggleCalendar}
-            isActive={!isCalendarCollapsed}
+            onClick={() => onSliderChange('calendar')}
+            isActive={sliderPosition === 'calendar'}
             icon={CalendarIcon}
-            label={isCalendarCollapsed ? "Open Timeline" : "Collapse Timeline"}
+            label="Full Timeline"
             accentColor="var(--accent-color)"
         />
       </div>

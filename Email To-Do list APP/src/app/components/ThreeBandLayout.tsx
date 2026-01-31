@@ -51,7 +51,7 @@ export function ThreeBandLayout({ emails, onResolve, onPin, onEmailClick, isLigh
             </button>
         </div>
 
-    <div className="grid grid-cols-3 gap-6 pb-8">
+    <div className="grid grid-cols-3 gap-3 pb-8">
       {(['now', 'next', 'later'] as EmailBand[]).map((band) => {
         // Grouping Logic
         const emailsInBand = bandGroups[band];

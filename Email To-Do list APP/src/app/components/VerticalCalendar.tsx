@@ -1,8 +1,8 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { CalendarEvent, GhostEvent } from '@/app/types';
 import { motion, AnimatePresence } from 'motion/react';
 import { format, differenceInMinutes, setHours, addHours, isSameDay } from 'date-fns';
-import { Sparkles, FileText, CheckCircle2, ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
+import { Sparkles, CheckCircle2, ChevronLeft, ChevronRight, Calendar as CalendarIcon, Folder, ChevronDown } from 'lucide-react';
 
 interface VerticalCalendarProps {
   events: CalendarEvent[];
@@ -12,6 +12,21 @@ interface VerticalCalendarProps {
   onEventClick: (event: CalendarEvent) => void;
 }
 
+// Group events by their starting hour
+function groupEventsByHour(events: CalendarEvent[]) {
+  const groups: Record<number, CalendarEvent[]> = {};
+  
+  events.forEach(event => {
+    const hour = event.start.getHours();
+    if (!groups[hour]) {
+      groups[hour] = [];
+    }
+    groups[hour].push(event);
+  });
+  
+  return groups;
+}
+
 export function VerticalCalendar({ events, ghostEvents, collapsed, onToggle, onEventClick }: VerticalCalendarProps) {
   // Use fixed "today" from mock data to align with user session
   const TODAY = new Date(2026, 0, 31);
@@ -19,6 +34,10 @@ export function VerticalCalendar({ events, ghostEvents, collapsed, onToggle, onE
   const todaysEvents = events.filter(e => isSameDay(e.start, TODAY));
   const todaysGhostEvents = ghostEvents.filter(e => e.suggestedDate && isSameDay(e.suggestedDate, TODAY));
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [expandedFolders, setExpandedFolders] = useState<number[]>([]);
+  
+  // Group events by hour
+  const eventGroups = groupEventsByHour(todaysEvents);
   
   // Start from 5 AM
   const startHour = 5;
@@ -88,16 +107,16 @@ export function VerticalCalendar({ events, ghostEvents, collapsed, onToggle, onE
             
             {/* Daily Briefing / AI Summary */}
             {/* Daily Briefing / AI Summary */}
-            <div className="bg-white/90 rounded-xl p-4 border border-white/20 shadow-lg mt-2">
-              <div className="flex items-center gap-2 mb-2 text-blue-600 text-xs uppercase tracking-widest font-bold">
+            <div className="bg-white/10 backdrop-blur-xl rounded-xl p-4 border border-white/20 shadow-lg mt-2">
+              <div className="flex items-center gap-2 mb-2 text-blue-400 text-xs uppercase tracking-widest font-bold">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Daily Brief</span>
               </div>
-              <p className="text-sm text-slate-900 font-medium leading-relaxed mb-3">
+              <p className="text-sm text-white/90 font-medium leading-relaxed mb-3">
                 "You have 3 hours of deep work scheduled. The investor pitch is your priority—deck needs review by 2 PM."
               </p>
-              <div className="flex items-center gap-2 text-[10px] text-slate-500 font-semibold tracking-wide uppercase">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+              <div className="flex items-center gap-2 text-[10px] text-white/60 font-semibold tracking-wide uppercase">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                 <span>All systems nominal</span>
               </div>
             </div>
@@ -155,98 +174,138 @@ export function VerticalCalendar({ events, ghostEvents, collapsed, onToggle, onE
             )}
           </div>
 
-          {/* Events */}
+          {/* Events - Grouped by Hour */}
           <AnimatePresence>
-            {!collapsed && todaysEvents.map(event => {
-                // Check for optimization suggestion
-                const isDeepWork = event.type === 'deep-work';
-                // Simply check hours for mock purpose (real app would be more robust)
-                const hour = event.start.getHours();
-                const isOutsidePeak = hour < 9 || hour >= 11;
-                const showSuggestion = isDeepWork && isOutsidePeak;
+            {!collapsed && Object.entries(eventGroups).map(([hourStr, eventsInHour]) => {
+              const hour = parseInt(hourStr);
+              const isExpanded = expandedFolders.includes(hour);
+              const hasMultiple = eventsInHour.length > 1;
+              const firstEvent = eventsInHour[0];
+              
+              // Toggle folder expansion
+              const toggleFolder = () => {
+                if (isExpanded) {
+                  setExpandedFolders(expandedFolders.filter(h => h !== hour));
+                } else {
+                  setExpandedFolders([...expandedFolders, hour]);
+                }
+              };
 
+              // If multiple events at same hour, show as folder
+              if (hasMultiple) {
                 return (
-              <motion.div
-                key={event.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                onClick={() => onEventClick(event)}
-                className={`absolute left-16 right-4 p-4 rounded-xl border overflow-hidden hover:z-10 hover:shadow-xl transition-all cursor-pointer z-10 ${
-                  event.isShadow 
-                    ? 'border-dashed border-white/40 bg-black/40 backdrop-blur-sm' 
-                    : 'border-white/10'
-                }`}
-                style={{
-                  top: getTopOffset(event.start),
-                  height: getHeight(event.start, event.end),
-                  backgroundColor: event.isShadow 
-                    ? undefined 
-                    : event.type === 'deep-work' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  borderColor: event.isShadow
-                    ? undefined
-                    : event.type === 'deep-work' ? 'rgba(56, 189, 248, 0.3)' : 'rgba(255, 255, 255, 0.1)',
-                }}
-              >
-                <div className="flex items-center gap-2 mb-1">
-                  <div className={`w-2 h-2 rounded-full ${
-                    event.isShadow ? 'bg-white/40 border border-white/60' :
-                    event.type === 'deep-work' ? 'bg-sky-400' : 'bg-indigo-400'
-                  }`} />
-                  <span className="text-[10px] opacity-70 tracking-wide font-mono">
-                    {format(event.start, 'HH:mm')} - {format(event.end, 'HH:mm')}
-                  </span>
-                  {event.isShadow && (
-                    <span className="ml-auto text-[10px] uppercase tracking-widest bg-white/10 px-1.5 py-0.5 rounded text-white/60">
-                      Ghost Block
+                  <motion.div
+                    key={`folder-${hour}`}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="absolute left-16 right-4 z-10"
+                    style={{ top: getTopOffset(firstEvent.start) }}
+                  >
+                    {/* Folder Header */}
+                    <div
+                      onClick={toggleFolder}
+                      className="p-3 rounded-lg border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm cursor-pointer hover:bg-purple-500/20 transition-all flex items-center gap-3"
+                    >
+                      <Folder className="w-4 h-4 text-purple-400" />
+                      <span className="text-sm font-medium">{eventsInHour.length} events at {format(firstEvent.start, 'h a')}</span>
+                      <ChevronDown className={`w-4 h-4 ml-auto transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                    </div>
+                    
+                    {/* Expanded Events */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mt-2 space-y-2 overflow-hidden"
+                        >
+                          {eventsInHour.map(event => (
+                            <div
+                              key={event.id}
+                              onClick={() => onEventClick(event)}
+                              className={`p-3 rounded-lg border cursor-pointer hover:bg-white/10 transition-all ${
+                                event.type === 'deep-work' 
+                                  ? 'border-sky-500/30 bg-sky-500/10' 
+                                  : 'border-white/10 bg-white/5'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2 mb-1">
+                                <div className={`w-2 h-2 rounded-full ${
+                                  event.type === 'deep-work' ? 'bg-sky-400' : 'bg-indigo-400'
+                                }`} />
+                                <span className="text-[10px] opacity-70 font-mono">
+                                  {format(event.start, 'HH:mm')} - {format(event.end, 'HH:mm')}
+                                </span>
+                              </div>
+                              <h4 className="font-medium text-sm">{event.title}</h4>
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              }
+
+              // Single event - render normally
+              const event = firstEvent;
+              const isDeepWork = event.type === 'deep-work';
+              const isOutsidePeak = hour < 9 || hour >= 11;
+              const showSuggestion = isDeepWork && isOutsidePeak;
+
+              return (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  onClick={() => onEventClick(event)}
+                  className={`absolute left-16 right-4 p-3 rounded-lg border overflow-hidden hover:z-10 hover:shadow-xl transition-all cursor-pointer z-10 ${
+                    event.isShadow 
+                      ? 'border-dashed border-white/40 bg-black/40 backdrop-blur-sm' 
+                      : 'border-white/10'
+                  }`}
+                  style={{
+                    top: getTopOffset(event.start),
+                    height: Math.min(getHeight(event.start, event.end), 80),
+                    backgroundColor: event.isShadow 
+                      ? undefined 
+                      : event.type === 'deep-work' ? 'rgba(56, 189, 248, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                    borderColor: event.isShadow
+                      ? undefined
+                      : event.type === 'deep-work' ? 'rgba(56, 189, 248, 0.3)' : 'rgba(255, 255, 255, 0.1)',
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className={`w-2 h-2 rounded-full ${
+                      event.isShadow ? 'bg-white/40 border border-white/60' :
+                      event.type === 'deep-work' ? 'bg-sky-400' : 'bg-indigo-400'
+                    }`} />
+                    <span className="text-[10px] opacity-70 tracking-wide font-mono">
+                      {format(event.start, 'HH:mm')} - {format(event.end, 'HH:mm')}
                     </span>
-                  )}
-                  {showSuggestion && (
-                     <motion.button
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="ml-auto flex items-center gap-1 bg-amber-500/10 text-amber-300 text-[10px] px-2 py-0.5 rounded-full border border-amber-500/20 hover:bg-amber-500/20 transition-colors"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                           // Mock optimization
-                        }}
-                     >
-                        <Sparkles className="w-2.5 h-2.5" />
-                        Optimize
-                     </motion.button>
-                  )}
-                </div>
-                <h4 className={`font-medium text-sm leading-tight mb-2 ${event.isShadow ? 'italic text-white/70' : ''}`}>
-                  {event.title}
-                </h4>
-                
-                {/* Fake Agenda Items */}
-                {event.type === 'meeting' && !event.isShadow && (
-                  <div className="space-y-1">
-                    <div className="h-px bg-white/10 w-full mb-1.5" />
-                    <div className="flex items-center gap-1.5 text-[10px] opacity-60">
-                      <FileText className="w-3 h-3" />
-                      <span>Review Q3 Metrics</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[10px] opacity-60">
-                      <FileText className="w-3 h-3" />
-                      <span>Finalize Deck</span>
-                    </div>
+                    {showSuggestion && (
+                       <motion.button
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          className="ml-auto flex items-center gap-1 bg-amber-500/10 text-amber-300 text-[10px] px-2 py-0.5 rounded-full border border-amber-500/20 hover:bg-amber-500/20 transition-colors"
+                          onClick={(e) => {
+                              e.stopPropagation();
+                          }}
+                       >
+                          <Sparkles className="w-2.5 h-2.5" />
+                          Optimize
+                       </motion.button>
+                    )}
                   </div>
-                )}
-                {event.type === 'deep-work' && (
-                  <div className="text-[10px] opacity-50 italic">
-                    No notifications allowed.
-                  </div>
-                )}
-                {event.isShadow && (
-                  <div className="text-[10px] opacity-50 border-t border-white/10 pt-2 flex items-center gap-1">
-                     <Sparkles className="w-3 h-3" />
-                     Estimated time for reply
-                  </div>
-                )}
-              </motion.div>
-            )})}
+                  <h4 className={`font-medium text-sm leading-tight ${event.isShadow ? 'italic text-white/70' : ''}`}>
+                    {event.title}
+                  </h4>
+                </motion.div>
+              );
+            })}
 
             {!collapsed && todaysGhostEvents.map(event => {
               if (!event.suggestedDate) return null;
