@@ -191,6 +191,18 @@ export default function App() {
     >
 
 
+
+      {/* YouTube Background Video */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <iframe 
+          title="Background Video"
+          className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 opacity-20"
+          src="https://www.youtube.com/embed/Y1BmjPeatI4?autoplay=1&mute=1&controls=0&loop=1&playlist=Y1BmjPeatI4&playsinline=1&showinfo=0&rel=0" 
+          allow="autoplay; encrypted-media"
+          style={{ pointerEvents: 'none' }}
+        />
+      </div>
+
       {/* Background grain texture */}
       <div className="fixed inset-0 opacity-[0.015] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
       
@@ -259,7 +271,11 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
           >
             <h1 className="font-['Playfair_Display'] text-4xl mb-2 tracking-tight">
-              team_namemail
+              {sliderPosition === 'calendar' 
+                ? 'Timeline' 
+                : sliderPosition === 'junk' 
+                  ? 'Junk & Spam' 
+                  : focusModeConfigs[focusMode].name}
             </h1>
             <p className="text-sm opacity-60 font-['Inter'] tracking-wide">
               {zenMode
@@ -356,7 +372,7 @@ export default function App() {
                 const isDarkText = focusMode === 'academic' || focusMode === 'startup';
                 return (
               <div className="flex-1 flex flex-col items-center justify-center text-center">
-                <div className={`w-20 h-20 rounded-2xl ${isDarkText ? 'bg-black/5 border-black/10' : 'bg-white/5 border-white/10'} border flex items-center justify-center mb-6`}>
+                <div className={`w-20 h-20 rounded-2xl ${isDarkText ? 'bg-black/10 border-black/20' : 'bg-black/40 border-white/20'} border flex items-center justify-center mb-6`}>
                   <span className="text-4xl">🗑️</span>
                 </div>
                 <h2 className={`font-['Instrument_Serif'] text-3xl mb-3 ${isDarkText ? 'text-black/70' : 'text-white/80'}`}>Junk & Spam</h2>

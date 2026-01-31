@@ -29,8 +29,8 @@ export function ThreeBandLayout({ emails, onResolve, onPin, onEmailClick, isLigh
   };
 
   const containerClass = isLightMode 
-    ? "bg-black/5 border-black/10 shadow-sm" 
-    : "bg-white/10 border-white/20 shadow-sm";
+    ? "bg-white/70 border-black/10 shadow-sm" 
+    : "bg-black/40 border-white/20 shadow-sm";
 
   const buttonClass = isGroupingEnabled 
       ? "bg-[var(--accent-color)]/20 border-[var(--accent-color)] text-[var(--accent-color)]"

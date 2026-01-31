@@ -39,6 +39,8 @@ export function EmailItem({ email, onResolve, onPin, onClick, isLightMode = fals
 
   // Calculate visual weight glow
   const getWeightGlow = () => {
+    // Urgent glow - Red/Orange tint for attention
+    if (email.intent === 'urgent') return '0 0 35px rgba(248, 113, 113, 0.35), inset 0 0 20px rgba(248, 113, 113, 0.1)'; 
     if (email.from.relationship === 'inner-circle') return '0 0 25px rgba(var(--accent-color-rgb), 0.15), inset 0 0 20px rgba(var(--accent-color-rgb), 0.05)';
     if (email.from.relationship === 'important') return '0 0 15px rgba(var(--accent-color-rgb), 0.1)';
     return 'none';
@@ -78,7 +80,7 @@ export function EmailItem({ email, onResolve, onPin, onClick, isLightMode = fals
       dragElastic={0.7}
       onDragEnd={handleDragEnd}
       style={{ x, opacity, backgroundColor, boxShadow: getWeightGlow() }}
-      className="relative bg-white/5 backdrop-blur-md rounded-2xl mb-2 cursor-pointer overflow-hidden"
+      className="relative bg-white/10 backdrop-blur-md rounded-2xl mb-2 cursor-pointer overflow-hidden"
       whileHover={{ scale: 1.01 }}
       onClick={() => onClick(email.id)}
     >

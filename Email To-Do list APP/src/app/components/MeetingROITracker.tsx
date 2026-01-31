@@ -35,7 +35,7 @@ export function MeetingROITracker({ onClose, events }: MeetingROITrackerProps) {
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        className="relative w-full max-w-3xl bg-[#0F172A] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-3xl bg-[#0F172A] border border-white/10 rounded-2xl shadow-2xl overflow-hidden text-slate-50"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}

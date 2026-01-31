@@ -40,7 +40,7 @@ export function SidebarRibbon({
   ];
 
   return (
-    <div className="sticky top-0 left-0 h-screen w-16 flex flex-col items-center py-6 bg-black/20 backdrop-blur-xl border-r border-white/10 z-50 flex-shrink-0">
+    <div className="sticky top-0 left-0 h-screen w-16 flex flex-col items-center py-6 bg-black/60 backdrop-blur-xl border-r border-white/10 z-50 flex-shrink-0">
       
       {/* Top: Timeline Page Button */}
       <div className="mb-8">
