@@ -1,5 +1,5 @@
 export type FocusMode = 'startup' | 'academic' | 'deep-work' | 'zen';
-export type FocusSliderPosition = 'home' | 'collab' | 'junk' | 'calendar';
+export type FocusSliderPosition = 'home' | 'collab' | 'junk' | 'calendar' | 'reports';
 export type EmailBand = 'now' | 'next' | 'later';
 export type Priority = 'high' | 'medium' | 'low';
 export type Relationship = 'inner-circle' | 'important' | 'regular' | 'noise';

@@ -6,6 +6,7 @@ import {
   Sparkles, 
   Calendar as CalendarIcon, 
   Home,
+  BarChart3,
   Settings,
   Trash2
 } from 'lucide-react';
@@ -34,7 +35,7 @@ export function SidebarRibbon({
 
   const positions: { value: FocusSliderPosition; icon: any; label: string }[] = [
     { value: 'home', icon: Home, label: 'Home' },
-    { value: 'junk', icon: Trash2, label: 'Junk' },
+    { value: 'reports', icon: BarChart3, label: 'Reports' },
   ];
 
   return (
@@ -95,6 +96,14 @@ export function SidebarRibbon({
             accentColor="#fbbf24" // amber-400
          />
          
+         <div className="h-px w-8 bg-white/10" /><RibbonButton 
+            onClick={() => onSliderChange('junk')}
+            isActive={sliderPosition === 'junk'}
+            icon={Trash2}
+            label="Junk"
+            accentColor="#ef4444" 
+            size="md"
+         />
          <div className="h-px w-8 bg-white/10 mt-2" />
          <button 
            className="p-3 rounded-xl text-white/40 hover:text-white hover:bg-white/5 transition-colors"

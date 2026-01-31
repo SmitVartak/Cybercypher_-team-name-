@@ -16,6 +16,7 @@ import { BurndownChart } from '@/app/components/BurndownChart';
 import { ComposeModal } from '@/app/components/ComposeModal';
 import { MeetingROITracker } from '@/app/components/MeetingROITracker';
 import { AgendaModal } from '@/app/components/AgendaModal';
+import { ReportsDashboard } from '@/app/components/ReportsDashboard';
 import { Email, CalendarEvent, IntentLabel } from '@/app/types';
 import { 
   mockEmails, 
@@ -24,7 +25,7 @@ import {
   mockCalendarEvents,
   mockThreadMap,
 } from '@/app/data/mockData';
-import { X } from 'lucide-react';
+import { X, Trash2 } from 'lucide-react';
 import { 
   focusModeConfigs,
   getFocusModeStyles,
@@ -380,7 +381,7 @@ export default function App() {
                 return (
               <div className="flex-1 flex flex-col items-center justify-center text-center">
                 <div className={`w-20 h-20 rounded-2xl ${isDarkText ? 'bg-black/10 border-black/20' : 'bg-black/40 border-white/20'} border flex items-center justify-center mb-6`}>
-                  <span className="text-4xl">🗑️</span>
+                  <Trash2 className={`w-10 h-10 ${isDarkText ? 'text-black/60' : 'text-white/60'}`} />
                 </div>
                 <h2 className={`font-['Instrument_Serif'] text-3xl mb-3 ${isDarkText ? 'text-black/70' : 'text-white/80'}`}>Junk & Spam</h2>
                 <p className={`text-sm max-w-md mb-8 ${isDarkText ? 'text-black/50' : 'opacity-50'}`}>
@@ -419,6 +420,13 @@ export default function App() {
                 );
               })()}
             </motion.div>
+          ) : sliderPosition === 'reports' ? (
+             <ReportsDashboard 
+                emails={filteredEmails}
+                events={mockCalendarEvents}
+                onBack={() => setSliderPosition('home')}
+                isDarkText={focusMode === 'academic' || focusMode === 'startup'}
+             />
           ) : sliderPosition === 'calendar' ? (
             // Full Calendar Page - Weekly Grid View
             <motion.div
