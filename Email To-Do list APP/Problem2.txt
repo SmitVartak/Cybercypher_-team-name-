@@ -1,0 +1,185 @@
+Email as a to-do list, complete with a focused inbox that highlights important messages and senders
+
+"Stop managing your inbox. Start navigating your day."
+
+Train the app by screening senders, and pin useful messages for later retrieval 
+
+There would be a bubble for each workspace
+
+## IMPORTANT:
+
+1)The Creative Twist: Items don't just sit there; they have "Weight." An email with a deadline tomorrow is visually "heavier" or glows slightly.
+
+2)The Interaction: Use a "Swipe to Resolve" mechanic even on desktop. Swiping right doesn't just archive; it "Completes the Loop." If it was a question, it asks: "Did you get what you needed?" This turns the inbox into a satisfaction tracker, not just a chore list.
+
+3)The Creative Twist: Use Avatars as Anchors. The top of the inbox isn't text; it’s a row of "Faces" (his Co-founder, his Professor). Clicking a face filters the entire system—Calendar and Email—to only show interactions with that person.
+
+4)The Training: Instead of a menu, use "Drag to Priority." If Kartik drags an email into his "Startup" project bubble, the AI learns that the sender is now a high-stakes contact for that specific context.
+
+5)The Creative Twist: "Temporal Whispers." When an email says "Let’s connect next week," a "Shadow Block" appears on the calendar. If Kartik hovers over that shadow, he sees a snippet of the email.He can drag that Shadow Block to a specific time to "Solidify" it. This turns the calendar from a static grid into a negotiation space.
+
+6)The Creative Twist: "Thread-Mapping." Instead of a vertical flow, clicking a project shows a Mind Map of the project. It shows: Meeting (Monday) → Resulting Email (Tuesday) → Follow-up Task (Wednesday).It solves Kartik's "lost focus" problem by showing the lineage of why he is doing a task.
+
+7)Notification - Ambient glow instead of red dot.
+
+8)The screen is divided into three soft vertical bands: Now, Next, and Later.Incoming mail lands in "Later" (dimmed opacity). AI identifies "High Intent" messages (e.g., from a Co-founder) and slides them into "Now" with a soft glow.There is no "Delete" or "Archive." You simply flick a message upward to resolve it (Done) or downward to "Snooze" it. The goal is to keep the "Now" band empty.
+
+9)You can set the priority and relationship with everyone manually, or let the email client decide it for you. important and closer ppl will be treated as a higher priority and will appear on top of other lower priority mails.
+
+10)Rotate to "Startup": The UI turns professional/midnight blue; emails from co-founders surface.
+Rotate to "Classroom": The UI turns academic/paper-white; syllabus and professor threads surface.
+Rotate to "Zen": The UI hides everything except a single clock and his next big deadline.
+
+11) State,       Primary Background,        Accent Color,        Vibe
+Deep Work,    #0F172A (Ink Blue),   #38BDF8 (Electric Blue),    "High contrast, hyper-focus."
+Startup Mode, #F8FAFC (Soft Slate),  #6366F1 (Indigo),        "Professional, energetic."
+Academic Mode, #FDFCF7 (Parchment), #92400E (Clay),"Calm,      grounding, studious."
+Zen/Evening,   #1E1E1E (Charcoal),  #FDE047 (Soft Amber),      "Low eye strain, warm."
+
+12)Typography: "The Editorial Look"
+Avoid "Standard System Fonts" (like Segoe UI or San Francisco). Go for an Editorial/Workspace feel.
+Headings: Playfair Display or Instrument Serif. (Using a Serif for headings makes the inbox feel like a curated magazine rather than a data table).
+Body/UI: Inter or Geist Sans. These are highly legible, modern, and feel "engineered."
+Micro-copy: All-caps, tracked-out (letter-spaced) sans-serif for labels like URGENT or PROJECT: SEED ROUND.
+
+14)Shape & Depth: "Glassmorphism & Soft Shadows"
+Instead of "boxes" and "borders," use Depth to show importance.
+The Layering: Emails shouldn't have borders. They should be "sheets" on a surface. Use a 4px corner radius for a sharp, modern feel, or 24px for a friendly, approachable tool.
+The "Context Bubble": Use a Glassmorphism effect (Background Blur: 20px, Opacity: 60%). When Kartik opens a project bubble, it should look like a frosted glass pane sliding over his calendar.
+Shadows: Use "Diffuse Shadows"—no hard edges. It should look like the elements are floating 10mm above the screen.
+
+15)Interaction Language (The "Magic" Details)
+In your Figma prototype, focus on these specific micro-interactions:
+The "Liquid" Button: The "Compose" button shouldn't just be a +. It should be a pill that expands into a text field in place when clicked, rather than opening a new window.
+Haptic Visuals: When Kartik marks a task as "Done," don't just show a checkmark. Have the text "Ghost out" (fade and slightly blur) before sliding off-screen.
+The "Shadow" Invite: Calendar invites shouldn't be solid blocks. Make them dashed-outline boxes that "fill in" with color only once Kartik clicks "Accept" within the email.
+
+16)Iconography: "Lineal & Minimal"
+Use thin-stroke icons (1px or 1.5px).
+Avoid filled-in icons; they create too much visual "weight."
+Pro Tip: Instead of a "Trash" can, use a "Flick" icon or a simple "X". Instead of a "Calendar" icon, use a small dot representing the current date.
+
+17)The "Hero" Component: The "Focus Slider"
+Design a single, elegant UI element at the bottom-center of the screen. It looks like a physical slider on a camera.
+Left: "Flow" (Minimal UI, no notifications).
+Center: "Balance" (Standard view).
+Right: "Collab" (Expands the calendar and shows team availability
+
+## FEATURES:
+1)Turning the inbox into a to-do list,complete with intelligent highlighting of important messages and real people. The app really does feel like you're browsing a list of reminders since you can click on the subject line to read the message or use the small "Done" checkbox next to a message to dismiss it as you would a pending task. 
+
+2)Your most important messages will always appear at the top of the inbox, which includes trusted senders that you've interacted with before and messages that Spark thinks are worthy of your attention. Newsletters, notifications, and calendar invites are grouped together, which helps to hide the clutter so you can deal with it later. 
+
+3)You can also train your inbox by marking senders as important using the right-click context menu. The more you use the app, the better it becomes at making your inbox a productive place to be.
+
+4)there's a pinned view for any messages you want to save for later. Pins are organized by date, or you can hit Ctrl+F to enter search and use the "is:pinned" flag to search just messages you've saved for later. Of course, there are plenty of other search flags that largely mimic Gmail's approach for finding messages like "in:drafts," "from:sender," "has:attachments," and so on.
+
+5)On top of this, the app includes a ton of hotkeys for super-fast navigation. You can right-click on a message, then select an option from the context menu (like pin or snooze), or you can hit the hotkey. There's a customizable shortcut for virtually every function. I was especially fond of being able to navigate my inbox with the arrow keys and hit keys like D to pin and S to snooze.
+
+6)There are also a ton of other settings to tweak, from light or dark themes and color-coded inboxes, through to customizable snooze times and deciding whether the compose box should open in a new window every time. There's also a suite of AI features to summarize, translate, and draft messages. These are limited to premium accounts, along with meeting and other app integrations, templates, and a zen Home screen for when you don't want to stare at your inbox.
+
+7)The "Context Bubble": Instead of an inbox list, Kartik sees active projects (e.g., Startup X: Seed Round). Clicking it shows a unified timeline: past emails, upcoming meetings, and pending follow-ups in one vertical flow.
+
+8)Status-Sync: If Kartik is in a "Deep Work" calendar block, the email UI physically changes—blurring non-urgent sender names or moving the "Compose" button to a "Collect for Later" tray.
+
+9)The "Calendar-First" Reply: When Kartik receives an email asking to meet, the "Reply" field is pre-populated with his available slots. He doesn't type; he just highlights a block of time on a mini-calendar overlay, and it embeds as a clean, interactive widget in the email.
+
+10)The "Ghost" Event: When an email contains a deadline or a "we should chat next week," the system creates a "Ghost Event" on his calendar—a transparent block that stays there until he either confirms it as a meeting or dismisses it as a task.
+
+11)The UI: During "Deep Work" blocks, the UI de-saturates. All colors turn to grayscale except for the one Project he is working on.If he receives an email while in "Flow State," it doesn't pop up. Instead, it becomes a tiny "Pulse" in the corner of the screen—non-intrusive, waiting for him to finish.
+
+
+
+
+
+GOALS:
+To make your pitch pop, focus your prototype on these three screens:
+
+The Unified "Focus" Dashboard: A split-view where the calendar acts as the "spine" and emails hang off the specific time slots they relate to.
+
+The "Magic Reply": Showing a user scheduling a meeting entirely within the email composition window.
+
+The Context Switcher: A simple toggle that filters the entire system (Email + Calendar) between Startup, Academics, and Personal.
+
+Focus on the "Micro-Interactions." In Figma, animate the transition where an email "melts" into a calendar event. Use the term "Communication Entropy"—explain that your tool stops information from becoming chaotic by giving it a "home" the moment it arrives.
+
+Your Figma Checklist for the Presentation:
+Grid: Use a 12-column grid, but leave massive 64px margins on the sides. White space is your best friend for a "Calm" UI.
+
+Empty State: Design a "Zen Home" screen. When the inbox is empty, show a beautiful, high-res 3D gradient or a subtle grain texture with a quote: "You're all caught up, Kartik. Focus on your deep work."
+
+The "Bridge": Create a component where an email thread and a calendar event are physically connected by a thin, glowing line.
+
+
+
+
+
+
+
+
+
+
+Aura: Navigating Time, Not Tasks
+
+The Philosophy
+Aura eliminates "Communication Entropy" by unifying Email and Calendar into a single, context-aware environment. It treats information as having physical weight and temporal presence.
+
+1. Core Mechanics: The "How"
+The Action Stream: A 3-tier vertical layout (Now / Next / Later). AI slides high-intent messages into "Now" with an Ambient Glow, while low-priority clutter settles in "Later" with dimmed opacity.
+
+Temporal Whispers (Ghost Events): Email intent (e.g., "Let's meet Tuesday") appears as a transparent "Shadow Block" on the calendar. Drag it to a slot to "Solidify" the meeting and send the invite instantly.
+
+Thread-Mapping: Clicking a project bubble (e.g., Startup X) transforms the list into a Mind Map, connecting meetings to the specific emails and follow-ups they generated.
+
+Avatar Anchors: Your "Inner Circle" appears as faces at the top. Clicking a face filters the entire ecosystem—emails and calendar—to that specific relationship.
+
+2. Interaction & Interface
+The Focus Slider: A physical UI toggle to shift states:
+
+Startup Mode: Slate/Indigo palette; surfaces professional threads.
+
+Academic Mode: Parchment/Clay palette; surfaces coursework and syllabus info.
+
+Deep Work/Zen: Grayscale; hides all UI except a "Thought Catcher" (Liquid Compose) and your next deadline.
+
+Swipe to Resolve: Swiping right "Completes the Loop." The app asks, "Did you get what you needed?" turning your inbox into a satisfaction tracker rather than a chore list.
+
+Dynamic Weight: Emails with tomorrow's deadlines are visually "heavier" or pulse, while older, un-pinned items fade into the background.
+
+3. Visual Identity: "Editorial Zen"
+Depth over Borders: No boxes. Elements are "sheets" of glass floating with 10mm diffuse shadows and 20px background blur (Glassmorphism).
+
+The Editorial Look: Instrument Serif for headings (Magazine feel) paired with Geist Sans (Precision feel).
+
+Ambient Notifications: Red dots are replaced by soft, pulsing glows that respect Kartik's focus.
+
+The "Hero" Presentation Moments (Figma)
+The Spine View: The calendar acts as a vertical spine; emails "hang" off the specific time slots they relate to.
+
+The Magic Reply: An animation of highlighting calendar availability directly within the email body to embed a scheduling widget.
+
+The UI Shapeshifter: Showing the smooth color/font transition as Kartik slides from "Startup" to "Deep Work."
+
+
+FIGMA LINK
+https://www.figma.com/team_invite/redeem/c4vMLHHBv3rkX5SYPnHWGY?t=PxQycLbTu9hOtVKT-22
+
+
+
+Run Email To-Do List App Walkthrough
+Prerequisites
+Node.js installed
+Steps to Run
+Install Dependencies Run the following command in the project root:
+
+npm install
+Note: This will also install the necessary peer dependencies (react, react-dom) which might be missing from the main dependencies list.
+
+Start Development Server Run:
+
+npm run dev
+Access the App Open your browser and navigate to: http://localhost:5173/
+
+potential Issues
+If you see "module not found" errors, ensure npm install completed successfully.
+The browser tool in this environment encountered an issue, but the server should be running fine locally.
