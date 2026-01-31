@@ -15,6 +15,7 @@ import { EmailDetailModal } from '@/app/components/EmailDetailModal';
 import { BurndownChart } from '@/app/components/BurndownChart';
 import { ComposeModal } from '@/app/components/ComposeModal';
 import { MeetingROITracker } from '@/app/components/MeetingROITracker';
+import { AgendaModal } from '@/app/components/AgendaModal';
 import { Email, CalendarEvent, IntentLabel } from '@/app/types';
 import { 
   mockEmails, 
@@ -44,6 +45,8 @@ export default function App() {
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [isROIModalOpen, setIsROIModalOpen] = useState(false);
+  const [isAgendaModalOpen, setIsAgendaModalOpen] = useState(false);
+  const [selectedAgendaSlot, setSelectedAgendaSlot] = useState<{date: Date, hour: number} | null>(null);
 
   // Filter emails based on context and selected contact
   const filteredEmails = useMemo(() => {
@@ -294,7 +297,11 @@ export default function App() {
                  Briefing
                </motion.button>
             ) : (
-                <div className="absolute top-8 right-10 flex gap-3">
+                <div className="absolute top-4 right-10 flex items-center gap-3 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full p-1.5 pr-2 shadow-2xl z-50">
+                    <BurndownChart 
+                        emails={filteredEmails} 
+                        className="relative bg-transparent border-none p-2 min-w-[160px] z-20"
+                    />
                    <motion.button
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -496,8 +503,18 @@ export default function App() {
                           return (
                             <div 
                               key={dayOffset}
-                              className={`p-1 border-l border-white/10 relative ${isToday ? 'bg-[var(--accent-color)]/10' : ''} ${isCurrentHour ? 'bg-emerald-500/20 ring-1 ring-inset ring-emerald-500/40' : ''}`}
+                              className={`group p-1 border-l border-white/10 relative ${isToday ? 'bg-[var(--accent-color)]/10' : ''} ${isCurrentHour ? 'bg-emerald-500/20 ring-1 ring-inset ring-emerald-500/40' : ''}`}
                             >
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedAgendaSlot({ date: dayDate, hour });
+                                  setIsAgendaModalOpen(true);
+                                }}
+                                className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity bg-white/10 hover:bg-[var(--accent-color)] hover:text-white backdrop-blur-sm text-[10px] uppercase font-medium px-2 py-0.5 rounded border border-white/10 z-20"
+                              >
+                                + Add
+                              </button>
                               {dayEvents.map(event => (
                                 <div
                                   key={event.id}
@@ -599,8 +616,7 @@ export default function App() {
         {/* Onboarding Hint */}
         {!zenMode && <OnboardingHint />}
 
-        {/* Burn-down Chart */}
-        {!zenMode && <BurndownChart emails={filteredEmails} />}
+
 
         {/* Thread Map Modal */}
         <AnimatePresence>
@@ -645,6 +661,17 @@ export default function App() {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
       `}</style>
+      
+      <AnimatePresence>
+        {isAgendaModalOpen && (
+          <AgendaModal 
+            isOpen={isAgendaModalOpen} 
+            onClose={() => setIsAgendaModalOpen(false)}
+            initialDate={selectedAgendaSlot?.date}
+            initialHour={selectedAgendaSlot?.hour}
+          />
+        )}
+      </AnimatePresence>
       
       {/* Toaster */}
       <Toaster />

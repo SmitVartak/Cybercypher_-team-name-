@@ -6,7 +6,6 @@ import {
   Sparkles, 
   Calendar as CalendarIcon, 
   Home,
-  Users,
   Settings,
   Trash2
 } from 'lucide-react';
@@ -35,7 +34,6 @@ export function SidebarRibbon({
 
   const positions: { value: FocusSliderPosition; icon: any; label: string }[] = [
     { value: 'home', icon: Home, label: 'Home' },
-    { value: 'collab', icon: Users, label: 'Collab' },
     { value: 'junk', icon: Trash2, label: 'Junk' },
   ];
 
@@ -57,44 +55,45 @@ export function SidebarRibbon({
       <div className="flex-1 w-full flex flex-col items-center gap-8">
         
         {/* Context Modes (formerly ContextSwitcher) */}
+        {/* Layout/Slider Modes (moved from bottom) */}
         <div className="flex flex-col gap-4 w-full items-center">
              <div className="h-px w-8 bg-white/10" />
-             {modes.map(mode => (
+             {positions.map(pos => (
                  <RibbonButton
-                    key={mode.value}
-                    onClick={() => onModeChange(mode.value)}
-                    isActive={currentMode === mode.value}
-                    icon={mode.icon}
-                    label={focusModeConfigs[mode.value].name}
-                    accentColor={focusModeConfigs[mode.value].accentColor}
+                    key={pos.value}
+                    onClick={() => onSliderChange(pos.value)}
+                    isActive={sliderPosition === pos.value}
+                    icon={pos.icon}
+                    label={pos.label}
+                    accentColor="white"
+                    size="md"
                  />
              ))}
-             {/* Zen Mode Special Case */}
-             <div className="h-px w-8 bg-white/10" />
-             <RibbonButton
-                onClick={() => onModeChange('zen')}
-                isActive={currentMode === 'zen'}
-                icon={Sparkles}
-                label="Zen Mode"
-                accentColor="#fbbf24" // amber-400
-             />
         </div>
       </div>
 
       {/* Bottom: Layout/Slider Modes */}
       <div className="mt-auto flex flex-col gap-4 w-full items-center">
          <div className="h-px w-8 bg-white/10" />
-         {positions.map(pos => (
+         {modes.map(mode => (
              <RibbonButton
-                key={pos.value}
-                onClick={() => onSliderChange(pos.value)}
-                isActive={sliderPosition === pos.value}
-                icon={pos.icon}
-                label={pos.label}
-                accentColor="white"
-                size="sm"
+                key={mode.value}
+                onClick={() => onModeChange(mode.value)}
+                isActive={currentMode === mode.value}
+                icon={mode.icon}
+                label={focusModeConfigs[mode.value].name}
+                accentColor={focusModeConfigs[mode.value].accentColor}
              />
          ))}
+         {/* Zen Mode Special Case */}
+         <div className="h-px w-8 bg-white/10" />
+         <RibbonButton
+            onClick={() => onModeChange('zen')}
+            isActive={currentMode === 'zen'}
+            icon={Sparkles}
+            label="Zen Mode"
+            accentColor="#fbbf24" // amber-400
+         />
          
          <div className="h-px w-8 bg-white/10 mt-2" />
          <button 
