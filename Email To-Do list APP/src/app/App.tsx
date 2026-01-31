@@ -349,7 +349,7 @@ export default function App() {
               animate={{ opacity: 1, filter: 'blur(0px)' }}
               exit={{ opacity: 0, filter: 'blur(10px)' }}
               transition={{ duration: 0.5 }}
-              className="flex flex-col h-full"
+              className="flex flex-col h-full overflow-y-auto custom-scrollbar"
             >
               {/* Use darker text for academic/startup modes */}
               {(() => {
@@ -512,7 +512,7 @@ export default function App() {
               animate={{ opacity: 1, filter: 'blur(0px)' }}
               exit={{ opacity: 0, filter: 'blur(10px)' }}
               transition={{ duration: 0.5 }}
-              className="flex flex-col h-full"
+              className="flex flex-col h-full overflow-y-auto custom-scrollbar"
             >
               {/* Avatar Anchors + Project Bubbles Row */}
               <div className="mb-3 flex-shrink-0 flex items-center gap-4">
