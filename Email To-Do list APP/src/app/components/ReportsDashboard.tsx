@@ -34,6 +34,22 @@ export function ReportsDashboard({ emails, events, onBack, isDarkText }: Reports
     { name: 'Pending', value: stats.pending, color: '#fbbf24' },   // amber-400
   ];
 
+  const sacrificeData = useMemo(() => {
+    const sacrifices: Record<string, number> = {};
+    
+    events.forEach(e => {
+        if (e.shadowedContext) {
+            const durationHrs = (e.end.getTime() - e.start.getTime()) / (1000 * 60 * 60);
+            sacrifices[e.shadowedContext] = (sacrifices[e.shadowedContext] || 0) + durationHrs;
+        }
+    });
+
+    return Object.entries(sacrifices).map(([name, hours]) => ({
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        hours: Math.round(hours * 10) / 10
+    }));
+  }, [events]);
+
   const barData = [
     { name: 'Mon', completed: 12, pending: 4 },
     { name: 'Tue', completed: 19, pending: 8 },
@@ -148,6 +164,55 @@ export function ReportsDashboard({ emails, events, onBack, isDarkText }: Reports
                </ResponsiveContainer>
             </div>
          </div>
+      </div>
+
+      {/* Sacrifice Chart Card */}
+      <div className={`mb-8 p-6 rounded-3xl border ${isDarkText ? 'bg-white/60 backdrop-blur-xl border-white/40 shadow-xl' : 'bg-black/20 backdrop-blur-xl border-white/10'}`}>
+        <div className="flex items-center gap-3 mb-6">
+            <div className="p-2 bg-red-500/10 rounded-lg border border-red-500/20">
+                <Clock className="w-5 h-5 text-red-400" />
+            </div>
+            <div>
+                <h3 className={`text-lg font-medium ${isDarkText ? 'text-black/70' : 'text-white/80'}`}>Focus Sacrifice Analysis</h3>
+                <p className="text-xs opacity-50">Hours lost from each context due to interruptions</p>
+            </div>
+        </div>
+        
+        <div className="h-48 w-full">
+            {sacrificeData.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={sacrificeData} layout="vertical">
+                    <defs>
+                        <linearGradient id="colorSacrifice" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#ef4444" stopOpacity={0.8}/>
+                        <stop offset="100%" stopColor="#f87171" stopOpacity={0.5}/>
+                        </linearGradient>
+                    </defs>
+                    <XAxis type="number" stroke={isDarkText ? '#9ca3af' : '#6b7280'} fontSize={12} tickLine={false} axisLine={false} unit="hr" />
+                    <Tooltip 
+                        content={<CustomTooltip />} 
+                        cursor={{ fill: isDarkText ? '#f3f4f6' : '#ffffff10' }}
+                    />
+                    <Bar 
+                        dataKey="name" 
+                        hide 
+                    />
+                    <Bar 
+                        dataKey="hours" 
+                        fill="url(#colorSacrifice)" 
+                        radius={[0, 6, 6, 0]} 
+                        barSize={32}
+                        label={{ position: 'insideLeft', fill: 'white', fontSize: 12 }}
+                    />
+                    </BarChart>
+                </ResponsiveContainer>
+            ) : (
+                <div className="h-full flex flex-col items-center justify-center opacity-40">
+                    <p>No sacrifices recorded this week.</p>
+                    <p className="text-xs">Your schedule is perfectly aligned! ✨</p>
+                </div>
+            )}
+        </div>
       </div>
       
       {/* Pending Tasks List */}

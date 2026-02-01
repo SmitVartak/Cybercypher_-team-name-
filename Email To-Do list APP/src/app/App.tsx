@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AvatarAnchors } from '@/app/components/AvatarAnchors';
 import { SidebarRibbon } from '@/app/components/SidebarRibbon';
@@ -48,6 +48,9 @@ export default function App() {
   const [isROIModalOpen, setIsROIModalOpen] = useState(false);
   const [isAgendaModalOpen, setIsAgendaModalOpen] = useState(false);
   const [selectedAgendaSlot, setSelectedAgendaSlot] = useState<{date: Date, hour: number} | null>(null);
+
+  // Track if briefing has been shown this session
+  const briefingShown = useRef(false);
 
   // Filter emails based on context and selected contact
   const filteredEmails = useMemo(() => {
@@ -148,6 +151,13 @@ export default function App() {
   };
 
   const triggerBriefingToast = () => {
+    // Only show once per session
+    if (briefingShown.current) {
+      toast.info('Briefing already shown this session');
+      return;
+    }
+    briefingShown.current = true;
+    
     const duration = 3500;
     toast.custom((t) => (
       <div className="w-[356px] relative overflow-hidden bg-white/60 backdrop-blur-xl border border-white/40 shadow-2xl rounded-xl flex flex-col ring-1 ring-black/5">
@@ -457,7 +467,15 @@ export default function App() {
                 <div className="bg-black/15 backdrop-blur-md rounded-lg border border-white/20 overflow-hidden shadow-xl">
                   {/* Days Header */}
                   <div className="grid grid-cols-8 border-b border-white/20 bg-white/5">
-                    <div className="p-3 text-xs font-mono opacity-60 text-center border-r border-white/15">Time</div>
+                    <div className="p-3 text-xs font-mono opacity-60 text-center border-r border-white/15 flex flex-col justify-center gap-1">
+                        <span>Time</span>
+                        <button 
+                            onClick={() => setIsSacrificeReportOpen(true)}
+                            className="text-[10px] text-red-400 hover:text-red-300 underline decoration-dotted"
+                        >
+                            Sacrifice Report
+                        </button>
+                    </div>
                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, i) => {
                       const today = new Date();
                       const startOfWeek = new Date(today);
@@ -498,11 +516,9 @@ export default function App() {
                             const eventDay = e.start.getDay();
                             const eventHour = e.start.getHours();
                             
-                            // Filter by selected mode
-                            // Startup mode shows: startup
-                            // Academic mode shows: academic
-                            // Career (deep-work) mode shows: deep-work
-                            const matchesMode = e.context === focusMode;
+                            // Filter by selected mode or shadow events
+                            // Startup mode shows: startup events AND events that shadowed startup
+                            const matchesMode = e.context === focusMode || e.shadowedContext === focusMode;
                             
                             return eventDay === dayOffset && eventHour === hour && matchesMode;
                           });
@@ -525,19 +541,29 @@ export default function App() {
                               >
                                 + Add
                               </button>
-                              {dayEvents.map(event => (
+                              {dayEvents.map(event => {
+                                const isShadow = event.shadowedContext === focusMode;
+                                return (
                                 <div
                                   key={event.id}
                                   onClick={() => handleEventClick(event)}
                                   className={`text-[10px] p-1.5 rounded mb-1 cursor-pointer truncate font-medium shadow-sm ${
-                                    event.type === 'deep-work' 
-                                      ? 'bg-sky-500/30 border border-sky-400/50 text-sky-200'
-                                      : 'bg-indigo-500/30 border border-indigo-400/50 text-indigo-200'
+                                    isShadow
+                                      ? 'bg-red-500/10 border border-red-500/30 text-red-300 border-dashed opacity-70'
+                                      : event.type === 'deep-work' 
+                                        ? 'bg-sky-500/30 border border-sky-400/50 text-sky-200'
+                                        : 'bg-indigo-500/30 border border-indigo-400/50 text-indigo-200'
                                   }`}
                                 >
-                                  {event.title}
+                                  {isShadow ? (
+                                    <div className="flex items-center gap-1">
+                                      <span className="opacity-50 line-through text-[9px]">{event.originalTitle}</span>
+                                      <span>→ {event.title}</span>
+                                    </div>
+                                  ) : event.title}
                                 </div>
-                              ))}
+                                );
+                              })}
                             </div>
                           );
                         })}

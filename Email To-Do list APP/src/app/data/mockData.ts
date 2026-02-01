@@ -1031,6 +1031,28 @@ export const mockCalendarEvents: CalendarEvent[] = [
     type: 'deep-work',
     context: 'deep-work',
   },
+
+  // Shadow Events (Sacrificed Time)
+  {
+    id: 'cal-shadow-1',
+    title: 'Internship Sync',
+    start: new Date(2026, 0, 26, 14, 0), // Monday 2pm
+    end: new Date(2026, 0, 26, 15, 0),
+    type: 'meeting',
+    context: 'academic',
+    shadowedContext: 'startup',
+    originalTitle: 'Product Dev Sprint',
+  },
+  {
+    id: 'cal-shadow-2',
+    title: 'Faculty Meeting',
+    start: new Date(2026, 0, 28, 10, 0), // Wednesday 10am
+    end: new Date(2026, 0, 28, 11, 0),
+    type: 'meeting',
+    context: 'academic',
+    shadowedContext: 'startup',
+    originalTitle: 'User Interviews',
+  },
 ];
 
 export const mockProjectBubbles: ProjectBubble[] = [

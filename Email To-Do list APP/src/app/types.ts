@@ -58,6 +58,8 @@ export interface CalendarEvent {
   participants?: Contact[];
   context: string;
   isShadow?: boolean;
+  shadowedContext?: FocusMode; // The context that was sacrificed (e.g. 'startup')
+  originalTitle?: string; // The title of the sacrificed event
   energyLevel?: 'high' | 'medium' | 'low';
 }
 
