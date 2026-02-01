@@ -165,6 +165,31 @@ export function EmailItem({ email, onResolve, onPin, onClick, isLightMode = fals
               {email.preview}
             </p>
 
+            {/* Tags */}
+            {email.tags && email.tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {email.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wider ${
+                      tag === 'deadline' ? 'bg-red-500/40 text-red-100 border border-red-400/60' :
+                      tag === 'meeting' ? 'bg-blue-500/40 text-blue-100 border border-blue-400/60' :
+                      tag === 'research' ? 'bg-purple-500/40 text-purple-100 border border-purple-400/60' :
+                      tag === 'school' ? 'bg-yellow-500/40 text-yellow-100 border border-yellow-400/60' :
+                      tag === 'startup' ? 'bg-green-500/40 text-green-100 border border-green-400/60' :
+                      tag === 'investor' ? 'bg-orange-500/40 text-orange-100 border border-orange-400/60' :
+                      tag === 'design' ? 'bg-pink-500/40 text-pink-100 border border-pink-400/60' :
+                      tag === 'product' ? 'bg-cyan-500/40 text-cyan-100 border border-cyan-400/60' :
+                      tag === 'event' ? 'bg-indigo-500/40 text-indigo-100 border border-indigo-400/60' :
+                      'bg-white/20 text-white/90 border border-white/40'
+                    }`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
             {email.needsReply && (
               <div className="mt-3 inline-flex items-center gap-1 px-3 py-1 bg-[var(--accent-color)]/20 text-[var(--accent-color)] rounded-full text-xs uppercase tracking-wider">
                 Needs Reply

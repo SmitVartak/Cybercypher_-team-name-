@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 
 interface ComposeModalProps {
   onClose: () => void;
-  onSend: (data: { to: string; subject: string; body: string; intent: IntentLabel; justification?: string; quiet?: boolean }) => void;
+  onSend: (data: { to: string; subject: string; body: string; intent: IntentLabel; justification?: string; quiet?: boolean; tags?: string[] }) => void;
 }
 
 export function ComposeModal({ onClose, onSend }: ComposeModalProps) {
@@ -17,6 +17,24 @@ export function ComposeModal({ onClose, onSend }: ComposeModalProps) {
   const [selectedIntent, setSelectedIntent] = useState<IntentLabel | null>(null);
   const [justification, setJustification] = useState('');
   const [quietDelivery, setQuietDelivery] = useState(false);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [customTag, setCustomTag] = useState('');
+
+  const availableTags = ['meeting', 'deadline', 'research', 'school', 'startup', 'investor', 'design', 'product', 'event'];
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    );
+  };
+
+  const addCustomTag = () => {
+    const trimmed = customTag.trim().toLowerCase();
+    if (trimmed && !selectedTags.includes(trimmed)) {
+      setSelectedTags(prev => [...prev, trimmed]);
+      setCustomTag('');
+    }
+  };
 
   const handleInitialSend = () => {
     if (!to || !subject || !body) {
@@ -37,7 +55,7 @@ export function ComposeModal({ onClose, onSend }: ComposeModalProps) {
       return;
     }
 
-    onSend({ to, subject, body, intent: selectedIntent, justification, quiet: quietDelivery });
+    onSend({ to, subject, body, intent: selectedIntent, justification, quiet: quietDelivery, tags: selectedTags });
   };
 
   // Auto-enable quiet delivery for low priority intents
@@ -68,15 +86,15 @@ export function ComposeModal({ onClose, onSend }: ComposeModalProps) {
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="w-full max-w-2xl bg-[#111] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+        className="w-full max-w-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-white/20 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-white/10 bg-white/5">
-          <h2 className="font-['Instrument_Serif'] text-xl text-white/90">
+        <div className="flex items-center justify-between p-4 border-b border-white/20 bg-gradient-to-r from-indigo-600/20 via-purple-600/20 to-indigo-600/20 backdrop-blur-sm">
+          <h2 className="font-['Instrument_Serif'] text-xl text-white">
             {step === 'compose' ? 'New Message' : 'Intent Shield'}
           </h2>
           <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white">
-            <X className="w-5 h-5 opacity-60" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
@@ -95,7 +113,7 @@ export function ComposeModal({ onClose, onSend }: ComposeModalProps) {
                   <input
                     type="text"
                     placeholder="To"
-                    className="w-full bg-transparent border-b border-white/10 p-2 text-white placeholder-white/40 focus:outline-none focus:border-[var(--accent-color)] transition-colors"
+                    className="w-full bg-white/5 border-b border-white/20 p-2 text-white placeholder-white/40 focus:outline-none focus:border-indigo-400 transition-colors"
                     value={to}
                     onChange={e => setTo(e.target.value)}
                     autoFocus
@@ -105,15 +123,77 @@ export function ComposeModal({ onClose, onSend }: ComposeModalProps) {
                   <input
                     type="text"
                     placeholder="Subject"
-                    className="w-full bg-transparent border-b border-white/10 p-2 text-lg font-medium text-white placeholder-white/40 focus:outline-none focus:border-[var(--accent-color)] transition-colors"
+                    className="w-full bg-white/5 border-b border-white/20 p-2 text-lg font-medium text-white placeholder-white/40 focus:outline-none focus:border-indigo-400 transition-colors"
                     value={subject}
                     onChange={e => setSubject(e.target.value)}
                   />
                 </div>
+                
+                {/* Tag Selection - Moved above textarea */}
+                <div className="border-t border-b border-indigo-500/20 bg-indigo-500/5 py-4">
+                  <label className="text-xs text-indigo-300 uppercase tracking-widest font-medium mb-3 block">
+                    Tags (Optional)
+                  </label>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {availableTags.map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => toggleTag(tag)}
+                        className={`inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium uppercase tracking-wider transition-all ${
+                          selectedTags.includes(tag)
+                            ? tag === 'deadline' ? 'bg-red-500/40 text-red-100 border border-red-400/60' :
+                              tag === 'meeting' ? 'bg-blue-500/40 text-blue-100 border border-blue-400/60' :
+                              tag === 'research' ? 'bg-purple-500/40 text-purple-100 border border-purple-400/60' :
+                              tag === 'school' ? 'bg-yellow-500/40 text-yellow-100 border border-yellow-400/60' :
+                              tag === 'startup' ? 'bg-green-500/40 text-green-100 border border-green-400/60' :
+                              tag === 'investor' ? 'bg-orange-500/40 text-orange-100 border border-orange-400/60' :
+                              tag === 'design' ? 'bg-pink-500/40 text-pink-100 border border-pink-400/60' :
+                              tag === 'product' ? 'bg-cyan-500/40 text-cyan-100 border border-cyan-400/60' :
+                              tag === 'event' ? 'bg-indigo-500/40 text-indigo-100 border border-indigo-400/60' :
+                              'bg-white/20 text-white/90 border border-white/40'
+                            : 'bg-white/5 text-white/50 border border-white/10 hover:bg-white/10 hover:border-white/20'
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                    {/* Display custom tags */}
+                    {selectedTags.filter(tag => !availableTags.includes(tag)).map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => toggleTag(tag)}
+                        className="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-medium uppercase tracking-wider transition-all bg-white/20 text-white/90 border border-white/40"
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                  {/* Custom tag input */}
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Create custom tag..."
+                      value={customTag}
+                      onChange={e => setCustomTag(e.target.value)}
+                      onKeyPress={e => e.key === 'Enter' && (e.preventDefault(), addCustomTag())}
+                      className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[var(--accent-color)] transition-colors"
+                    />
+                    <button
+                      type="button"
+                      onClick={addCustomTag}
+                      className="px-4 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-sm text-white transition-colors"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div>
+                
                 <div>
                   <textarea
                     placeholder="What's on your mind?"
-                    className="w-full bg-transparent p-2 text-white/80 placeholder-white/40 focus:outline-none min-h-[300px] resize-none"
+                    className="w-full bg-transparent p-2 text-white/80 placeholder-white/40 focus:outline-none min-h-[150px] resize-none"
                     value={body}
                     onChange={e => setBody(e.target.value)}
                   />

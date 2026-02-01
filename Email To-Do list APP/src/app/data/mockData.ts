@@ -97,6 +97,7 @@ Also, please review the [[attached financial projections]] one last time.
 
 Best,
 Priya`,
+    tags: ['meeting', 'deadline', 'startup', 'investor'],
   },
   {
     id: 'e3',
@@ -123,6 +124,7 @@ Let's review this in detail [[later this week]].
 
 Cheers,
 Arjun`,
+    tags: ['startup', 'product', 'deadline'],
   },
   {
     id: 'e5',
@@ -146,6 +148,7 @@ Let me know what you think about the [[color palette]] – tried to keep it cons
 
 Best,
 Rohan`,
+    tags: ['design', 'startup'],
   },
   {
     id: 'e7',
@@ -174,6 +177,7 @@ Action items:
 
 Thanks,
 Priya`,
+    tags: ['meeting', 'startup'],
   },
   {
     id: 'e8',
@@ -200,6 +204,7 @@ Are you free for a [[30-min sync at 2:00 PM today]]?
 
 Thanks,
 Vikram`,
+    tags: ['meeting', 'startup', 'deadline'],
   },
   {
     id: 'e11',
@@ -225,6 +230,7 @@ Please come prepared with your updates!
 
 Best,
 Priya`,
+    tags: ['meeting', 'startup'],
   },
   {
     id: 'e12',
@@ -253,6 +259,7 @@ Key items to include:
 
 Thanks,
 Arjun`,
+    tags: ['deadline', 'startup'],
   },
   {
     id: 'e15',
@@ -280,6 +287,7 @@ The [[Sequoia partner call]] is tomorrow at 10 AM. Here are the key talking poin
 Please review and add any missing points by [[today EOD]].
 
 Arjun`,
+    tags: ['meeting', 'investor', 'deadline', 'startup'],
   },
   {
     id: 'e17',
@@ -307,6 +315,7 @@ Figma link attached. Please review during [[today's design review at 10 AM]].
 
 Cheers,
 Rohan`,
+    tags: ['meeting', 'design', 'startup'],
   },
   {
     id: 'e18',
@@ -331,6 +340,7 @@ Action items from [[Thursday's sprint retro]]:
 Let's make this sprint count!
 
 Vikram`,
+    tags: ['meeting', 'deadline', 'startup'],
   },
   {
     id: 'e19',
@@ -358,6 +368,7 @@ The [[investor pitch]] is at [[2:00 PM TODAY]]. Please review:
 We have [[ONE SHOT]] at this. Let's nail it!
 
 Priya`,
+    tags: ['meeting', 'deadline', 'investor', 'startup'],
   },
   {
     id: 'e21',
@@ -383,6 +394,7 @@ Prizes: Bragging rights + pizza!
 Who's in? Reply if interested!
 
 Rahul`,
+    tags: ['event', 'startup'],
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -414,6 +426,7 @@ Please send me the [[revised citations by Friday]].
 
 Regards,
 Prof. Iyer`,
+    tags: ['research', 'deadline', 'academic', 'school'],
   },
   {
     id: 'e4',
@@ -437,6 +450,7 @@ Please send me your availability for the [[weeks of Feb 9th and Feb 16th]].
 
 Best,
 Dr. Desai`,
+    tags: ['meeting', 'deadline', 'academic', 'school'],
   },
   {
     id: 'e9',
@@ -461,6 +475,7 @@ Need this by [[tomorrow morning]].
 
 Best,
 Kavita`,
+    tags: ['deadline', 'academic', 'school'],
   },
   {
     id: 'e13',

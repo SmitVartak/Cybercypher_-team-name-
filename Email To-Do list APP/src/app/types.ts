@@ -36,6 +36,7 @@ export interface Email {
   urgentJustification?: string;
   isInvite?: boolean;
   bundleId?: string;
+  tags?: string[]; // Tags like 'school', 'research', 'meeting', 'deadline'
 }
 
 export interface GhostEvent {
