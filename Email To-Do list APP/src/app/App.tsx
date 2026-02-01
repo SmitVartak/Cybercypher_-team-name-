@@ -276,7 +276,7 @@ export default function App() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="font-['Playfair_Display'] text-4xl mb-2 tracking-tight">
+            <h1 className="font-sans font-bold text-5xl mb-2 tracking-tight">
               {sliderPosition === 'calendar' 
                 ? 'Timeline' 
                 : sliderPosition === 'junk' 

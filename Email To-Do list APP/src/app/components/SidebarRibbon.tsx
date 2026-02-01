@@ -39,7 +39,7 @@ export function SidebarRibbon({
   ];
 
   return (
-    <div className="sticky top-0 left-0 h-screen w-16 flex flex-col items-center py-6 bg-black/60 backdrop-blur-xl border-r border-white/10 z-50 flex-shrink-0">
+    <div className="h-[calc(100vh-1.5rem)] w-16 my-3 ml-3 flex flex-col items-center py-6 bg-black/30 backdrop-blur-2xl border border-white/10 rounded-[2rem] z-50 flex-shrink-0 shadow-2xl">
       
       {/* Top: Timeline Page Button */}
       <div className="mb-8">
@@ -135,7 +135,7 @@ function RibbonButton({
     return (
         <motion.button
             onClick={onClick}
-            className={`relative group rounded-xl flex items-center justify-center transition-all ${
+            className={`relative group rounded-2xl flex items-center justify-center transition-all ${
                 size === 'sm' ? 'p-2' : 'p-3'
             } ${isActive ? 'text-white' : 'text-white/40 hover:text-white/80'}`}
             whileHover={{ scale: 1.1 }}

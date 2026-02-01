@@ -40,7 +40,7 @@ export function EmailItem({ email, onResolve, onPin, onClick, isLightMode = fals
   // Calculate visual weight glow
   const getWeightGlow = () => {
     // Urgent glow - Red/Orange tint for attention
-    if (email.intent === 'urgent') return '0 0 35px rgba(248, 113, 113, 0.35), inset 0 0 20px rgba(248, 113, 113, 0.1)'; 
+    if (email.intent === 'urgent') return '0 0 80px rgba(239, 68, 68, 0.8), inset 0 0 40px rgba(239, 68, 68, 0.4), 0 0 20px rgba(239, 68, 68, 1)'; 
     if (email.from.relationship === 'inner-circle') return '0 0 25px rgba(var(--accent-color-rgb), 0.15), inset 0 0 20px rgba(var(--accent-color-rgb), 0.05)';
     if (email.from.relationship === 'important') return '0 0 15px rgba(var(--accent-color-rgb), 0.1)';
     return 'none';
@@ -55,6 +55,11 @@ export function EmailItem({ email, onResolve, onPin, onClick, isLightMode = fals
     if (email.from.relationship === 'noise') return 0.6;
     return 1;
   };
+
+  // Urgent Pulse Logic
+  const isUrgent = email.intent === 'urgent';
+  const urgentGlowHigh = '0 0 80px rgba(239, 68, 68, 0.8), inset 0 0 40px rgba(239, 68, 68, 0.4), 0 0 20px rgba(239, 68, 68, 1)';
+  const urgentGlowLow = '0 0 40px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(239, 68, 68, 0.2), 0 0 10px rgba(239, 68, 68, 0.5)';
 
   // Satisfaction state render
   if (showSatisfaction) {
@@ -79,7 +84,17 @@ export function EmailItem({ email, onResolve, onPin, onClick, isLightMode = fals
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.7}
       onDragEnd={handleDragEnd}
-      style={{ x, opacity, backgroundColor, boxShadow: getWeightGlow() }}
+      animate={isUrgent ? {
+        boxShadow: [urgentGlowLow, urgentGlowHigh, urgentGlowLow]
+      } : undefined}
+      transition={isUrgent ? {
+        boxShadow: {
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+        }
+      } : undefined}
+      style={{ x, opacity, backgroundColor, boxShadow: isUrgent ? undefined : getWeightGlow() }}
       className="relative bg-white/10 backdrop-blur-md rounded-2xl mb-2 cursor-pointer overflow-hidden"
       whileHover={{ scale: 1.01 }}
       onClick={() => onClick(email.id)}
