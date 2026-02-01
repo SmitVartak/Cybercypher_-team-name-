@@ -212,7 +212,10 @@ export default function App() {
           <iframe 
             title="Background Video"
             className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 opacity-20"
-            src="https://www.youtube.com/embed/Y1BmjPeatI4?autoplay=1&mute=1&controls=0&loop=1&playlist=Y1BmjPeatI4&playsinline=1&showinfo=0&rel=0" 
+            src={focusMode === 'deep-work' 
+              ? "https://www.youtube.com/embed/9vntypeV5QU?autoplay=1&mute=1&controls=0&loop=1&playlist=9vntypeV5QU&playsinline=1&showinfo=0&rel=0"
+              : "https://www.youtube.com/embed/Y1BmjPeatI4?autoplay=1&mute=1&controls=0&loop=1&playlist=Y1BmjPeatI4&playsinline=1&showinfo=0&rel=0"
+            }
             allow="autoplay; encrypted-media"
             style={{ pointerEvents: 'none' }}
           />
