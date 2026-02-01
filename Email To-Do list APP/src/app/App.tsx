@@ -313,7 +313,7 @@ export default function App() {
                  Briefing
                </motion.button>
             ) : (
-                <div className="absolute top-4 right-10 flex items-center gap-3 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full p-1.5 pr-2 shadow-2xl z-50">
+                <div className="absolute top-4 right-10 flex items-center gap-3 bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl p-1.5 pr-2 shadow-2xl z-50">
                     <BurndownChart 
                         emails={filteredEmails} 
                         className="relative bg-transparent border-none p-2 min-w-[160px] z-20"

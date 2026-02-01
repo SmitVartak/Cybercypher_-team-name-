@@ -39,7 +39,16 @@ export function SidebarRibbon({
   ];
 
   return (
-    <div className="h-[calc(100vh-1.5rem)] w-16 my-3 ml-3 flex flex-col items-center py-6 bg-black/30 backdrop-blur-2xl border border-white/10 rounded-[2rem] z-50 flex-shrink-0 shadow-2xl">
+    <div className="h-screen w-16 flex flex-col items-center py-6 bg-black/70 backdrop-blur-2xl border-r border-white/20 z-50 flex-shrink-0 shadow-2xl">
+      
+      {/* App Name */}
+      <div className="mb-4 h-20 flex items-center justify-center">
+        <div className="transform -rotate-90 whitespace-nowrap">
+          <span className="text-base font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-[0.3em] font-mono">
+            TM
+          </span>
+        </div>
+      </div>
       
       {/* Top: Timeline Page Button */}
       <div className="mb-8">
