@@ -4,10 +4,11 @@ import { CalendarEvent } from '@/app/types';
 
 interface MeetingROITrackerProps {
   onClose: () => void;
+  onViewReport: () => void;
   events: CalendarEvent[];
 }
 
-export function MeetingROITracker({ onClose, events }: MeetingROITrackerProps) {
+export function MeetingROITracker({ onClose, onViewReport, events }: MeetingROITrackerProps) {
   // Mock calculations based on "events" (in a real app, this would be real data)
   const meetingEvents = events.filter(e => e.type === 'meeting');
   const totalMeetingMinutes = meetingEvents.reduce((acc, curr) => {
@@ -111,7 +112,10 @@ export function MeetingROITracker({ onClose, events }: MeetingROITrackerProps) {
                     </div>
                 </div>
 
-                <button className="w-full py-3 bg-white text-black font-medium rounded-xl hover:bg-white/90 transition-colors flex items-center justify-center gap-2">
+                <button 
+                  onClick={onViewReport}
+                  className="w-full py-3 bg-white text-black font-medium rounded-xl hover:bg-white/90 transition-colors flex items-center justify-center gap-2"
+                >
                     View Full Report <ArrowRight className="w-4 h-4" />
                 </button>
             </div>

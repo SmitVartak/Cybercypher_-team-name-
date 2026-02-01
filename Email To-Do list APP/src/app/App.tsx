@@ -643,6 +643,10 @@ export default function App() {
             {isROIModalOpen && (
                 <MeetingROITracker 
                     onClose={() => setIsROIModalOpen(false)}
+                    onViewReport={() => {
+                      setIsROIModalOpen(false);
+                      setSliderPosition('reports');
+                    }}
                     events={mockCalendarEvents}
                 />
             )}
